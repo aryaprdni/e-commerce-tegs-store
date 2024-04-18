@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  email          String @id @db.VarChar(100)
+  email          String     @id @db.VarChar(100)
   username       String?
   full_name      String?
   password       String
@@ -19,7 +19,7 @@ model User {
   province       String? 
   country        String?
   postal_code    String?
-  token String?
+  token          String?
 
   products       Product[]
 
@@ -27,11 +27,13 @@ model User {
 }
 
 model Category {
-  id             Int      @id @default(autoincrement())
-  name_category  String
-
-  products       Product[]
-
+  id               Int        @id @default(autoincrement())
+  name_category    String
+  parentCategoryId Int?
+  parentCategory   Category?  @relation("Subcategories", fields: [parentCategoryId], references: [id])
+  subcategories    Category[] @relation("Subcategories")
+  
+  products         Product[]
   @@map("categories")
 }
 
@@ -40,15 +42,15 @@ model Product {
   product_name   String
   stock          Int
   price          Int
-  Image          String
+  image          String[]
   size           String[]
   description    String?
   rating         Int?
-  email          String @db.VarChar(100)
+  email          String   @db.VarChar(100)
   category_id    Int
 
-  user User @relation(fields: [email], references: [email])
-  category Category @relation(fields: [category_id], references: [id])
+  user           User     @relation(fields: [email], references: [email])
+  category       Category @relation(fields: [category_id], references: [id])
 
   @@map("products")
 }

@@ -20,6 +20,7 @@ CREATE TABLE "users" (
 CREATE TABLE "categories" (
     "id" SERIAL NOT NULL,
     "name_category" TEXT NOT NULL,
+    "parentCategoryId" INTEGER,
 
     CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
 );
@@ -30,7 +31,7 @@ CREATE TABLE "products" (
     "product_name" TEXT NOT NULL,
     "stock" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
-    "Image" TEXT NOT NULL,
+    "image" TEXT[],
     "size" TEXT[],
     "description" TEXT,
     "rating" INTEGER,
@@ -39,6 +40,9 @@ CREATE TABLE "products" (
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 );
+
+-- AddForeignKey
+ALTER TABLE "categories" ADD CONSTRAINT "categories_parentCategoryId_fkey" FOREIGN KEY ("parentCategoryId") REFERENCES "categories"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_email_fkey" FOREIGN KEY ("email") REFERENCES "users"("email") ON DELETE RESTRICT ON UPDATE CASCADE;

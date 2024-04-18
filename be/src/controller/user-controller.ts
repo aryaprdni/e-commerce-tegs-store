@@ -57,6 +57,7 @@ export class UserController {
                 ...request,
                 photo_profile: cloudinaryRes
             }
+            
 
             const response = await UserService.update(req.user!, request);
             res.status(200).json({

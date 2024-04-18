@@ -1,12 +1,19 @@
 import express from "express";
 import { authMiddleware } from "../middleware/auth-middleware";
 import { UserController } from "../controller/user-controller";
-import uploadFile from "../middleware/upload-file";
+import upload from "../middleware/upload-file";
+import { ProductController } from "../controller/product-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware)
 
 // User API
 apiRouter.get("/api/users/current", UserController.get)
-apiRouter.patch("/api/users/current", uploadFile().singleUploadMiddleware, UserController.update)
+apiRouter.patch("/api/users/current", upload.single("photo_profile"), UserController.update)
 apiRouter.delete("/api/users/current", UserController.logout)
+
+// Product API
+apiRouter.post("/api/products", upload.array("image" ), ProductController.create)
+apiRouter.put("/api/products/:productId(\\d+)", ProductController.update);
+apiRouter.delete("/api/products/:productId(\\d+)", ProductController.delete);
+apiRouter.get("/api/products/:productId", ProductController.search);
