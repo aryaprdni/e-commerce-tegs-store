@@ -5,12 +5,13 @@ import { ITag } from "../types/interface";
 export const Tag = ({ clideren }: ITag) => {
   return (
     <>
-      <Box w={"100%"} h={"100%"}>
-        <Box position={"relative"} w={170}>
+      <Box w={"100%"}>
+        <Box position={"relative"} w={220} bg={""}>
           <Heading
             fontFamily={"Poppins"}
             position={"relative"}
             zIndex={10}
+            fontSize={"2rem"}
             // bg={"red"}
             fontWeight={800}
           >
@@ -20,8 +21,8 @@ export const Tag = ({ clideren }: ITag) => {
             src="../../src/assets/img/vector.png"
             w={100}
             position={"absolute"}
-            top={6}
-            right={0}
+            top={5}
+            left={-2}
             zIndex={1}
           />
         </Box>
