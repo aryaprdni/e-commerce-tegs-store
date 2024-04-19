@@ -45,7 +45,10 @@ export type UpdateProductRequest = {
 export type SearchProductRequest = {
     product_name? : string;
     description?: string;
-    category?: string;
+    category?: {
+        name_category?: string;
+    }
+    // name_category: string;
 }
 
 export function toProductResponse(product: Product & { category?: {

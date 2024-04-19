@@ -112,17 +112,17 @@ export class ProductController {
             next(e);
         }
     }
-
+    
     static async search(req: Request, res: Response, next: NextFunction) {
         try {
             const request: SearchProductRequest = {
                 product_name: req.query.product_name as string,
                 description: req.query.description as string,
-                category: req.query.category as string
+                category: { name_category: req.query.name_category as string }
             }
 
             const response = await ProductService.search(request);
-
+    
             res.status(200).json({
                 data: response
             });
@@ -130,4 +130,5 @@ export class ProductController {
             next(e);
         }
     }
+    
 }

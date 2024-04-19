@@ -28,6 +28,7 @@ export class ProductValidation {
     static readonly SEARCH : ZodType = z.object({
         product_name: z.string().min(1).optional(),
         deskripsi: z.string().min(1).optional(),
-        category: z.string().min(1).optional(),
+        category: z.object({ name_category: z.string().min(1).optional() }).optional(),
+        // name_category: z.string().min(1).optional()
     })
 }

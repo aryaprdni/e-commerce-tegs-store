@@ -104,45 +104,54 @@ export class ProductService {
         return toProductResponse(product);
     }
 
-    static async search(request: SearchProductRequest) : Promise<ProductResponse[]> {
+    static async search(request: SearchProductRequest): Promise<ProductResponse[]> {
         const searchRequest = Validation.validate(ProductValidation.SEARCH, request);
 
-        const filters = [];
+        const filters: any[]= [];
 
-        if(searchRequest.product_name) {
+        if (searchRequest.product_name) {
             filters.push({
                 product_name: {
                     contains: searchRequest.product_name
                 }
-            })
+            });
         }
 
-        if(searchRequest.description) {
+        if (searchRequest.description) {
             filters.push({
                 description: {
                     contains: searchRequest.description
                 }
-            })
+            });
         }
 
-        if (searchRequest.category) {
+        console.log("name_category", searchRequest.category?.name_category);
+        console.log("Type of name_category:", typeof searchRequest.category?.name_category);
+        console.log("Value of name_category:", searchRequest.category?.name_category);
+
+
+        if (searchRequest.category && searchRequest.category.name_category) {
+            const categoryName = searchRequest.category.name_category.toString();
             filters.push({
                 category: {
-                    name_category: {
-                        contains: searchRequest.category
-                    }
+                    name_category: categoryName
                 }
-            })
+            });
         }
-
+    
         const products = await prismaClient.product.findMany({
             where: {
-                AND: filters
+                AND: filters,
+            },
+            include: {
+                category: true
             }
-        })
+        });
 
         const productResponses = products.map(product => toProductResponse(product));
 
-        return productResponses
+        return productResponses;
     }
+
+    
 }

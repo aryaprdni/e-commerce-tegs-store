@@ -16,4 +16,4 @@ apiRouter.delete("/api/users/current", UserController.logout)
 apiRouter.post("/api/products", upload.array("image" ), ProductController.create)
 apiRouter.put("/api/products/:productId(\\d+)", ProductController.update);
 apiRouter.delete("/api/products/:productId(\\d+)", ProductController.delete);
-apiRouter.get("/api/products/:productId", ProductController.search);
+
