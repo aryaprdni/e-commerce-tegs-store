@@ -6,14 +6,15 @@ import { ICardShop } from "../types/interface";
 export const CardShop = ({ id, ...item }: ICardShop) => {
   return (
     <>
-      <Box w={"100%"} h={"100%"}>
+      <Box w={"100%"} h={"100%"} mx={"auto"}>
         <Box
           key={id}
-          w={"17rem"}
-          h={"20rem"}
+          w={{ base: "50%", md: "50%", lg: "15rem", xl: "17rem" }}
+          h={{ base: "50%", md: "50%", lg: "20rem", xl: "20rem" }}
           borderRadius={"10px"}
           _hover={{ cursor: "pointer", boxShadow: "xl" }}
           border={"1px solid #ddd"}
+          mx={"auto"}
           overflow={"hidden"}
         >
           <Image
@@ -36,10 +37,10 @@ export const CardShop = ({ id, ...item }: ICardShop) => {
                 {item.price}
               </Text>
               <Text ml={"auto"} fontSize={"0.7rem"} color={"#aaa"}>
-                20 Terjual
+                20 Stock
               </Text>
             </HStack>
-            <HStack mt={1}>
+            <HStack mt={1} pb={4}>
               <FaStar color="GOLD" />
               <Text fontSize={"0.7rem"} color={"GOLD"}>
                 4.5

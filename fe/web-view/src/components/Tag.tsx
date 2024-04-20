@@ -6,7 +6,7 @@ export const Tag = ({ clideren }: ITag) => {
   return (
     <>
       <Box w={"100%"}>
-        <Box position={"relative"} w={220} bg={""}>
+        <Box position={"relative"}>
           <Heading
             fontFamily={"Poppins"}
             position={"relative"}
@@ -21,7 +21,7 @@ export const Tag = ({ clideren }: ITag) => {
             src="../../src/assets/img/vector.png"
             w={100}
             position={"absolute"}
-            top={5}
+            top={6}
             left={-2}
             zIndex={1}
           />

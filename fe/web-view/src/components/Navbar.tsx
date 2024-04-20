@@ -18,10 +18,11 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { LuShoppingCart } from "react-icons/lu";
+import { Link } from "react-router-dom";
 export const Navbar = () => {
   return (
     <>
-      <Box as="nav" w={"100%"} h={"5rem"} bg={"#00CC6D"}>
+      <Box as="nav" w={"100%"} h={"5rem"} bg={"brand.primary"}>
         <Box
           w={"80%"}
           pt={"0.4rem"}
@@ -53,9 +54,8 @@ export const Navbar = () => {
             </HStack>
           </Box>
         </Box>
-        <Box w={"80%"} mx={"auto"} mt={1} px={2} bg={""}>
+        <Box w={"80%"} mx={"auto"} mt={1} px={2}>
           <Box
-            bg={""}
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
@@ -68,7 +68,7 @@ export const Navbar = () => {
                 h={"2rem"}
               />
             </Box>
-            <Box width={"60%"} bg={""}>
+            <Box width={"60%"}>
               <InputGroup>
                 <Input
                   type="text"
@@ -108,13 +108,13 @@ export const Navbar = () => {
                     bg={"#01A95C"}
                     _hover={{ bg: "#20DF86" }}
                     color={"#fff"}
-                    // border={"1px solid #FFF"}
+                    border={"1px solid #FFF"}
                     borderRadius={"0.3rem"}
                     w={"4rem"}
                     h={"1.6rem"}
                     fontSize={"0.7rem"}
                   >
-                    Register
+                    <Link to="/register">Register</Link>
                   </Button>
                 </HStack>
               </Box>
