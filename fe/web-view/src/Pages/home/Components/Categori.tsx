@@ -15,9 +15,9 @@ export const Categori = (props: ICategori) => {
         >
           <Box
             key={props.id}
-            w={{ base: "100%", md: "16rem", lg: "100%", xl: "24rem" }}
-            // bg={{ base: "#fff", md: "blue", lg: "red", xl: "#fff" }}
-            h={{ base: "15rem", md: "20rem", lg: "32rem" }}
+            w={{ base: "100%", md: "100%", lg: "100%", xl: "24rem" }}
+            // bg={{ base: "#fff", md: "blue", lg: "red", xl: "yellow" }}
+            h={{ base: "15rem", md: "18rem", lg: "20rem", xl: "32rem" }}
             mx={"auto"}
             flexWrap={"wrap"}
             borderRadius={"15px"}
@@ -25,7 +25,9 @@ export const Categori = (props: ICategori) => {
             backgroundSize={"cover"}
             backgroundPosition={{
               base: "top",
-              md: "center",
+              md: "top",
+              lg: "top",
+              xl: "center",
             }}
             m={2}
             className="my-box"
