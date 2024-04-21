@@ -9,10 +9,9 @@ export type ProductResponse = {
     image: string[];
     description: string | null;
     rating: number | null;
-    email: string;
     category: {
         id: number;
-        name_category: string;
+        category_name: string;
         parentCategoryId: number | null;
     } | null;
 };
@@ -25,7 +24,6 @@ export type CreateProductRequest = {
     image: string[];
     description: string;
     rating: number;
-    email: string;
     category_id: number;
 }
 
@@ -38,7 +36,6 @@ export type UpdateProductRequest = {
     image?: string[];
     description?: string;
     rating?: number;
-    email?: string;
     category_id?: number;
 }
 
@@ -46,13 +43,13 @@ export type SearchProductRequest = {
     product_name? : string;
     description?: string;
     category?: {
-        name_category?: string;
+        category_name?: string;
     }
-    // name_category: string;
+    // category_name: string;
 }
 
 export function toProductResponse(product: Product & { category?: {
-    id: number; name_category: string; 
+    id: number; category_name: string; 
 } | null }): ProductResponse {
     return {
         id: product.id,
@@ -63,12 +60,11 @@ export function toProductResponse(product: Product & { category?: {
         image: product.image,
         description: product.description,
         rating: product.rating,
-        email: product.email,
         category: product.category
             ? {
                   id: product.category.id,
-                  name_category: product.category.name_category,
-                  parentCategoryId: null, // Jika parentCategoryId tidak tersedia
+                  category_name: product.category.category_name,
+                  parentCategoryId: null,
               }
             : null,
     };

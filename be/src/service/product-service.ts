@@ -25,7 +25,6 @@ export class ProductService {
         const product = await prismaClient.product.findFirst({
             where: {
                 id: productId,
-                email: email
             }
         })
 
@@ -47,7 +46,6 @@ export class ProductService {
         const product = await prismaClient.product.update({
             where: {
                 id: updateRequest.id,
-                email: user.email
             },
             data: updateRequest
         });
@@ -78,7 +76,7 @@ export class ProductService {
                 category: {
                     select: {
                         id: true,
-                        name_category: true
+                        category_name: true
                     }
                 }
             }
@@ -97,7 +95,6 @@ export class ProductService {
         const product = await prismaClient.product.delete({
             where: {
                 id: id,
-                email: user.email
             }
         });
 
@@ -125,16 +122,16 @@ export class ProductService {
             });
         }
 
-        console.log("name_category", searchRequest.category?.name_category);
-        console.log("Type of name_category:", typeof searchRequest.category?.name_category);
-        console.log("Value of name_category:", searchRequest.category?.name_category);
+        console.log("category_name", searchRequest.category?.category_name);
+        console.log("Type of category_name:", typeof searchRequest.category?.category_name);
+        console.log("Value of category_name:", searchRequest.category?.category_name);
 
 
-        if (searchRequest.category && searchRequest.category.name_category) {
-            const categoryName = searchRequest.category.name_category.toString();
+        if (searchRequest.category && searchRequest.category.category_name) {
+            const categoryName = searchRequest.category.category_name.toString();
             filters.push({
                 category: {
-                    name_category: categoryName
+                    category_name: categoryName
                 }
             });
         }

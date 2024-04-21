@@ -118,7 +118,7 @@ export class ProductController {
             const request: SearchProductRequest = {
                 product_name: req.query.product_name as string,
                 description: req.query.description as string,
-                category: { name_category: req.query.name_category as string }
+                category: { category_name: req.query.category_name as string }
             }
 
             const response = await ProductService.search(request);

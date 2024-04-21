@@ -4,7 +4,7 @@ export type UserResponse = {
     username: string | null;
     full_name: string | null;
     email: string;
-    phone_number: string | null;
+    phone_number: number | null;
     photo_profile: string | null;
     street: string | null;
     city: string | null;
@@ -29,7 +29,7 @@ export type UpdateUserRequest = {
     username?: string;
     full_name?: string;
     password?: string;
-    phone_number?: string;
+    phone_number?: number;
     photo_profile?: string;
     street?: string;
     city?: string;
