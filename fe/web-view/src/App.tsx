@@ -5,6 +5,7 @@ import { RegisterPage } from "./Pages/Register/RegisterPage";
 import { LoginPage } from "./Pages/Login/LoginPage";
 import { SearchPage } from "./Pages/Search/SearchPage";
 import { UserPage } from "./Pages/User/UserPage";
+import { ShoppingCard } from "./Pages/shoppingCard/ShoppingCard";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/user" element={<UserPage />} />
+        <Route path="/shopping-card" element={<ShoppingCard />} />
       </Routes>
     </>
   );
