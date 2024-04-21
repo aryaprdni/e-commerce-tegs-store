@@ -18,3 +18,9 @@ export interface ICardShop {
   price: number;
   reting?: number;
 }
+
+export interface ICorousel {
+  className?: React.StyleHTMLAttributes<HTMLDivElement>["className"];
+
+  onClick?: () => void;
+}

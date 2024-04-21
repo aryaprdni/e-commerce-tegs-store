@@ -101,7 +101,7 @@ export const Navbar = () => {
                     h={"1.6rem"}
                     fontSize={"0.7rem"}
                   >
-                    Login
+                    <Link to="/login">Login</Link>
                   </Button>
 
                   <Button

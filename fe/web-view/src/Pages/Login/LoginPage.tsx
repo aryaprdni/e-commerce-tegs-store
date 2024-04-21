@@ -1,7 +1,8 @@
 import { Box, Center, Flex, Image } from "@chakra-ui/react";
-import { FormRegis } from "./components/FormRegis";
+import { FormRegis } from "../Register/components/FormRegis";
+import { FormLogin } from "./components/FormLogin";
 
-export const RegisterPage = () => {
+export const LoginPage = () => {
   return (
     <Box w={"100%"} h={"100vh"} minHeight={"100%"}>
       <Box w={"100%"} h={"100%"} bg={"#fff"}>
@@ -21,7 +22,7 @@ export const RegisterPage = () => {
             justifyContent={"center"}
           >
             <Image
-              src="../../src/assets/img/regis.gif"
+              src="../../src/assets/img/login.png"
               w={"90%"}
               h={"90%"}
             ></Image>
@@ -35,7 +36,7 @@ export const RegisterPage = () => {
             // bg={"green"}
             m={"auto"}
           >
-            <FormRegis />
+            <FormLogin />
           </Box>
         </Flex>
       </Box>
