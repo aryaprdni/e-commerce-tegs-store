@@ -1,22 +1,13 @@
-import { Box, Center, HStack, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
+import { cardShop } from "../../Json/CardShop";
+import { categori } from "../../Json/Categori";
+import { Layout } from "../../Layout";
+import { CardShop } from "../../components/CardShop";
 import { Coreusel } from "../../components/Coreusel";
-import { Navbar } from "../../components/Navbar";
-import { Informasi } from "./Components/Informasi";
 import { Tag } from "../../components/Tag";
 import { Categori } from "./Components/Categori";
-import { categori } from "../../Json/Categori";
-import {
-  FaFacebook,
-  FaGithub,
-  FaInstagram,
-  FaStar,
-  FaTwitter,
-} from "react-icons/fa";
-import { CardShop } from "../../components/CardShop";
-import { cardShop } from "../../Json/CardShop";
-import { Parallax } from "react-parallax";
+import { Informasi } from "./Components/Informasi";
 import { ParallaxComponent } from "./Components/Parallax ";
-import { Layout } from "../../Layout";
 
 export const HomePage = () => {
   return (
@@ -49,7 +40,6 @@ export const HomePage = () => {
           </Box>
 
           {/* Categori */}
-
           <Box w={"100%"} h={"100%"} minHeight={"20rem"} my={6}>
             <Box w={"80%"} mx={"auto"} h={"100%"}>
               {/* Tag */}
@@ -123,7 +113,7 @@ export const HomePage = () => {
           </Box>
           {/* BEST Produk Akhir */}
 
-          {/* Benner 2 */}
+          {/* Benner Parallax 2 */}
           <Box w={"100%"} h={"26rem"} position={"relative"}>
             <ParallaxComponent />
           </Box>

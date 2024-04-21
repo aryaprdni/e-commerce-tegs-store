@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Box, Image } from "@chakra-ui/react";
 import Slider from "react-slick";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import { ICorousel } from "../types/interface";
 
 function PrevArrow(props: any) {
   const { className, style, onClick } = props;
@@ -19,7 +20,7 @@ function PrevArrow(props: any) {
   );
 }
 
-function NextArrow(props: any) {
+function NextArrow(props: ICorousel) {
   const { className, style, onClick } = props;
   return (
     <Box

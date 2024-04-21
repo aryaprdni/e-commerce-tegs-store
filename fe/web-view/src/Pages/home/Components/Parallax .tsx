@@ -8,8 +8,8 @@ export const ParallaxComponent = () => {
       <Parallax
         bgImage="../../src/assets/img/benner4.png"
         bgImageAlt="img"
-        strength={400}
-        blur={1}
+        strength={600}
+        // blur={2}
         style={{ width: "100%", height: "100%" }}
       >
         <Box
