@@ -18,3 +18,16 @@ export interface ICardShop {
   price: number;
   reting?: number;
 }
+
+export interface ICardCart {
+  id: number;
+  image: string;
+  name: string;
+  price: number;
+}
+
+export interface ICorousel {
+  className?: React.StyleHTMLAttributes<HTMLDivElement>["className"];
+
+  onClick?: () => void;
+}
