@@ -7,6 +7,7 @@ export class ProductValidation {
         stock: z.number().min(1),
         price: z.number().min(1),
         size: z.array(z.string()),
+        color: z.array(z.string()),
         image: z.array(z.string()),
         description: z.string().optional(),
         rating: z.number().optional(),

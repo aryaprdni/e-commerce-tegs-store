@@ -11,13 +11,12 @@ export class ProductService {
 
         const record = {
             ...createProductRequest,
-            ...{email: user.email}
         }
 
         const product = await prismaClient.product.create({
             data : record
         });
-
+        console.log(product)
         return toProductResponse(product)
     }
 
