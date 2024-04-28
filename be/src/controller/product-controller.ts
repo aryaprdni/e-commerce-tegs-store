@@ -140,4 +140,16 @@ export class ProductController {
         }
     }
     
+    static async getSimilarProducts(req: Request, res: Response, next: NextFunction) {
+        try {
+            const productId = Number(req.params.productId);
+            const response = await ProductService.getSimilarProducts(productId);
+    
+            res.status(200).json({
+                data: response
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
 }

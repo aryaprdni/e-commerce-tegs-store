@@ -148,6 +148,30 @@ export class ProductService {
 
         return productResponses;
     }
-
     
+    static async getSimilarProducts(productId: number): Promise<ProductResponse[]> {
+        const product = await prismaClient.product.findUnique({
+            where: {
+                id: productId
+            },
+        })
+
+        if (!product) {
+            throw new ResponseError(404, "Product not found");
+        }
+        
+        const similarProducts = await prismaClient.product.findMany({
+            where: {
+                category_id: product.category_id,
+                id: {
+                    not: productId
+                }
+            },
+            take: 5
+        });
+    
+        const productResponses = similarProducts.map(product => toProductResponse(product));
+    
+        return productResponses;
+    }
 }
