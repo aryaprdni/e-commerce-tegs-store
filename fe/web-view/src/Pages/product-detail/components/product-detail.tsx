@@ -5,7 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import { FiShoppingCart } from 'react-icons/fi';
 import { IProductDetail } from '../../../types/product-detail';
 
-const ProductDetailComps = ( props: IProductDetail ) => {
+const ProductDetailComps = ( props: IProductDetail, ) => {
     const [selectedImage, setSelectedImage] = useState(props.image && props.image.length > 0 ? props.image[0] : '');
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [quantity, setQuantity] = useState(1);

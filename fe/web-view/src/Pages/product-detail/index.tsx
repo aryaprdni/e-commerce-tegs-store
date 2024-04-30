@@ -1,15 +1,15 @@
-import { Box, Container} from "@chakra-ui/react";
+import { Box, Container, Flex, SimpleGrid, Text} from "@chakra-ui/react";
 import ProductDetailComps from "./components/product-detail";
 import InformationDescription from "./components/information-description";
-import SimilarProduct from "./components/similliar-product";
-import { Layout } from "../../Layout";
 import { useProductDetail } from "./hooks/product-detail";
+import { Layout } from "../../Layout";
+import { CoreuselDetail } from "./components/CoreuselDetail";
 
 const ProductDetail = () => {
-    const { productData} = useProductDetail();
-    console.log("productData: ", productData);
+    const { productData, productSimilarData } = useProductDetail();
+    console.log("similarProductData" + productSimilarData);
     return (
-        <Layout>
+        <Layout >
             <Container maxW='container.xl'>
                 <Box>
                     {/* Product Detail */}
@@ -36,8 +36,15 @@ const ProductDetail = () => {
                     
                     {/* Similar Products */}
                     <Box>
-                        <SimilarProduct />
+                        <Flex flexDirection={"column"} mt={10}>
+                            <Text fontSize={25} fontWeight={600}>You might also like</Text>
+                            <Text color={"grey"}>SIMILAR PRODUCTS</Text>
+                        </Flex>
                     </Box>
+                        <Box w={"100%"} h={"100%"} mt={10}>
+                            <CoreuselDetail />
+                        </Box>
+                    
                 </Box>
             </Container>
         </Layout>

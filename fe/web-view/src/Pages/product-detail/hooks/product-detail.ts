@@ -18,8 +18,7 @@ export function useProductDetail() {
 
     async function getSimilarProduct() {
         try {
-            const response = await API.get("/products/13/similar");
-            console.log("response.data: ", response.data);
+            const response = await API.get("/products/10/similar");
             setProductSimilarData(response.data.data);
         } catch (error) {
             console.log("Error getting product detail: ", error);

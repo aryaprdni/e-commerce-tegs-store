@@ -28,6 +28,6 @@ export interface ICardCart {
 
 export interface ICorousel {
   className?: React.StyleHTMLAttributes<HTMLDivElement>["className"];
-
+  style?: React.CSSProperties;
   onClick?: () => void;
 }

@@ -4,6 +4,7 @@ import { publicRouter } from './route/public-api';
 import { apiRouter } from './route/api';
 import cloudinary from './libs/cloudinary';
 import cors from 'cors';
+import 'dotenv/config';
 
 const app = express();
 const port = 3000;

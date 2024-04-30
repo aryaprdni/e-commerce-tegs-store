@@ -1,9 +1,8 @@
 import { Box, HStack, Image, Text } from "@chakra-ui/react";
-import React from "react";
 import { FaStar } from "react-icons/fa";
-import { ICardShop } from "../types/interface";
+import { IProductDetail } from "../types/product-detail";
 
-export const CardShop = ({ id, ...item }: ICardShop) => {
+export const CardShop = ({ id, ...item }: IProductDetail) => {
   return (
     <>
       <Box w={"100%"} h={"100%"} mx={"auto"}>
@@ -18,7 +17,7 @@ export const CardShop = ({ id, ...item }: ICardShop) => {
           overflow={"hidden"}
         >
           <Image
-            src={item.image}
+            src={item.image ? item.image[0] : ""}
             w={"100%"}
             h={"73%"}
             objectFit={"revert-layer"}
@@ -30,14 +29,15 @@ export const CardShop = ({ id, ...item }: ICardShop) => {
               mt={2}
               fontSize={"0.9rem"}
             >
-              {item.name}
+              {item.product_name}
             </Text>
             <HStack>
               <Text fontFamily={"poppins"} fontSize={"1rem"} fontWeight={700}>
                 {item.price}
               </Text>
               <Text ml={"auto"} fontSize={"0.7rem"} color={"#aaa"}>
-                20 Stock
+                {item.stock}
+                
               </Text>
             </HStack>
             <HStack mt={1} pb={4}>
