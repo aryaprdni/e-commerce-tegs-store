@@ -18,6 +18,7 @@ export type ProductResponse = {
 };
 
 export type CreateProductRequest = {
+    shopping_cart_id?: number | null;
     product_name : string;
     stock: number;
     price: number;

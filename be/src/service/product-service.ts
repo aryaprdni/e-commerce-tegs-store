@@ -6,19 +6,20 @@ import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response.error";
 
 export class ProductService {
-    static async create(user: User, request: CreateProductRequest) : Promise<ProductResponse> {
+    static async create(user: User, request: CreateProductRequest): Promise<ProductResponse> {
         const createProductRequest = Validation.validate(ProductValidation.CREATE, request);
-
+    
         const record = {
             ...createProductRequest,
-        }
-
+        };
+    
         const product = await prismaClient.product.create({
-            data : record
+            data: record
         });
-        console.log(product)
-        return toProductResponse(product)
+        
+        return toProductResponse(product);
     }
+    
 
     static async checkProductMustExists(email: string, productId : number) : Promise<Product> {
         const product = await prismaClient.product.findFirst({
