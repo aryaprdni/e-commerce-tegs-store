@@ -21,6 +21,7 @@ model User {
   postal_code    String?    @db.VarChar(100)
   token          String?    
   shoppingCart ShoppingCart?
+  transactions Transaction[]
 
   @@map("users")
 }
@@ -94,6 +95,9 @@ model Transaction {
   updated_at DateTime? @default(now())
 
   product TransactionsItem[]
+
+  user User @relation(fields: [user_email], references: [email])
+  user_email String
 
   @@map("transactions")
 }

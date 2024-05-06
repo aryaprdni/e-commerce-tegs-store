@@ -123,4 +123,25 @@ export class ShoppingCartService {
       
       return responses
     }
+
+    static async deleteAll(user: User): Promise<void> {
+      const shoppingCartItems = await prismaClient.shoppingCartItem.findMany({
+        where: {
+          shoppingCart: {
+            user_email: user.email
+              }
+          }
+      });
+
+      await Promise.all(shoppingCartItems.map(async (item) => {
+        await prismaClient.shoppingCartItem.delete({
+          where: {
+            productId_shoppingCartId: {
+              productId: item.productId,
+              shoppingCartId: item.shoppingCartId
+            }
+          }
+        })
+      }))
+    }
 }

@@ -13,6 +13,7 @@ CREATE TABLE "transactions" (
     "payment_method" VARCHAR(110),
     "createad_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "user_email" TEXT NOT NULL,
 
     CONSTRAINT "transactions_pkey" PRIMARY KEY ("id")
 );
@@ -29,6 +30,9 @@ CREATE TABLE "transactionsitem" (
 
     CONSTRAINT "transactionsitem_pkey" PRIMARY KEY ("productId","transactionId")
 );
+
+-- AddForeignKey
+ALTER TABLE "transactions" ADD CONSTRAINT "transactions_user_email_fkey" FOREIGN KEY ("user_email") REFERENCES "users"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "transactionsitem" ADD CONSTRAINT "transactionsitem_productId_fkey" FOREIGN KEY ("productId") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
