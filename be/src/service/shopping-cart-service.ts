@@ -1,6 +1,5 @@
 import { User } from "@prisma/client";
 import { prismaClient } from "../application/database";
-import { ResponseError } from "../error/response.error";
 import { CreateShoppingCartRequest, ShoppingCartItemResponse, ShoppingCartResponse, toShoppingCartItemResponse, toShoppingCartResponse } from "../model/shopping-cart-model";
 import { Validation } from "../validation/validation";
 import { ShoppingCartValidation } from "../validation/shopping-cart-validation";
