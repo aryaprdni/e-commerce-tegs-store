@@ -21,6 +21,7 @@ export interface ICardShop {
 
 export interface ICorousel {
   className?: React.StyleHTMLAttributes<HTMLDivElement>["className"];
+
   onClick?: () => void;
   style?: React.StyleHTMLAttributes<HTMLDivElement>["style"];
 }

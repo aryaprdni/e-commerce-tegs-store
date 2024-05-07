@@ -6,20 +6,20 @@ import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response.error";
 
 export class ProductService {
-    static async create(user: User, request: CreateProductRequest) : Promise<ProductResponse> {
+    static async create(user: User, request: CreateProductRequest): Promise<ProductResponse> {
         const createProductRequest = Validation.validate(ProductValidation.CREATE, request);
-
+    
         const record = {
             ...createProductRequest,
-            ...{email: user.email}
-        }
-
+        };
+    
         const product = await prismaClient.product.create({
-            data : record
+            data: record
         });
-
-        return toProductResponse(product)
+        
+        return toProductResponse(product);
     }
+    
 
     static async checkProductMustExists(email: string, productId : number) : Promise<Product> {
         const product = await prismaClient.product.findFirst({
@@ -149,6 +149,30 @@ export class ProductService {
 
         return productResponses;
     }
-
     
+    static async getSimilarProducts(productId: number): Promise<ProductResponse[]> {
+        const product = await prismaClient.product.findUnique({
+            where: {
+                id: productId
+            },
+        })
+
+        if (!product) {
+            throw new ResponseError(404, "Product not found");
+        }
+        
+        const similarProducts = await prismaClient.product.findMany({
+            where: {
+                category_id: product.category_id,
+                id: {
+                    not: productId
+                }
+            },
+            take: 5
+        });
+    
+        const productResponses = similarProducts.map(product => toProductResponse(product));
+    
+        return productResponses;
+    }
 }

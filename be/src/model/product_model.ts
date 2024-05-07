@@ -7,6 +7,7 @@ export type ProductResponse = {
     price: number;
     size: string[];
     image: string[];
+    color: string[];
     description: string | null;
     rating: number | null;
     category: {
@@ -17,6 +18,7 @@ export type ProductResponse = {
 };
 
 export type CreateProductRequest = {
+    shopping_cart_id?: number | null;
     product_name : string;
     stock: number;
     price: number;
@@ -24,6 +26,7 @@ export type CreateProductRequest = {
     image: string[];
     description: string;
     rating: number;
+    color: string[];
     category_id: number;
 }
 
@@ -34,6 +37,7 @@ export type UpdateProductRequest = {
     price?: number;
     size?: string[];
     image?: string[];
+    color?: string[];
     description?: string;
     rating?: number;
     category_id?: number;
@@ -57,6 +61,7 @@ export function toProductResponse(product: Product & { category?: {
         stock: product.stock,
         price: product.price,
         size: product.size,
+        color: product.color,
         image: product.image,
         description: product.description,
         rating: product.rating,

@@ -1,8 +1,9 @@
 import { Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { CiCreditCard1, CiDeliveryTruck } from "react-icons/ci";
 import { FaHandshake, FaHeadphones, FaUncharted } from "react-icons/fa";
+import { IProductDetail } from "../../../types/product-detail";
 
-const InformationDescription = () => {
+const InformationDescription = (props: IProductDetail) => {
     return (
         <Flex justifyContent="center">
             <Tabs>
@@ -13,10 +14,10 @@ const InformationDescription = () => {
 
                 <TabPanels>
                     <TabPanel>
-                        <Flex justifyContent="center" gap={5}>
-                            <Box width={"30%"}>
+                        <Flex justifyContent="center" gap={5} flexDirection={{base : 'column', md : 'row'}}>
+                            <Box width={{base : '100%', md : '25%'}}>
                                 <Text>Description</Text>
-                                <Text mt={"10px"}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum necessitatibus quasi deleniti fuga perferendis est iure repellendus nam. Sed, quis facere placeat ea iure iste? Eaque eos quibusdam reprehenderit ipsam expedita iure enim consequuntur dolorem atque nostrum ipsum obcaecati, in distinctio repudiandae. Laboriosam quos laudantium quae aut eum obcaecati dignissimos!</Text>
+                                <Text mt={"10px"}>{props.description}</Text>
                             </Box>
                             <Box gap={"50px"}>
                                 <Text>Feature</Text>
@@ -33,8 +34,8 @@ const InformationDescription = () => {
                                 <span style={{fontWeight:"bold"}}>Local Shipping :</span> Up to one week, $19.00</Text>
                                 <Text mb={"5px"}>
                                 <span style={{fontWeight:"bold"}}>UPS Ground Shipping :</span> 4-6 days, $29.00</Text>
-                                <Text mb={"5px"}><span style={{fontWeight:"bold"}}>Unishop Global Export :</span> 
-                                 3-4 days, $39.00</Text>
+                                <Text mb={"5px"}><span style={{fontWeight:"bold"}}>Unishop Global Export : </span> 
+                                3-4 days, $39.00</Text>
                             </Box>
                         </Flex>
                     </TabPanel>

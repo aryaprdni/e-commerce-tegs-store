@@ -11,3 +11,4 @@ publicRouter.post("/api/users/login", UserController.login);
 publicRouter.get("/api/products/:productId(\\d+)", ProductController.get);
 publicRouter.get("/api/products", ProductController.getAll);
 publicRouter.get("/api/search-products", ProductController.search);
+publicRouter.get("/api/products/:productId(\\d+)/similar", ProductController.getSimilarProducts)

@@ -8,6 +8,7 @@ import { ResponseError } from "../error/response.error";
 export class ProductController {
     static async create(req: UserRequest & Request, res: Response, next: NextFunction) {
         try {
+            console.log(req.body)
             let imagePaths: string[] = [];
 
             if (req.files && req.files.length) {
@@ -24,6 +25,13 @@ export class ProductController {
                 size = [];
             }
 
+            let color: any;
+            if (req.body.color) {
+                color = JSON.parse(req.body.color);
+            } else {
+                color = [];
+            }
+
             const request: CreateProductRequest = {
                 ...req.body,
                 image: imagePaths,
@@ -31,11 +39,12 @@ export class ProductController {
                 price: parseFloat(req.body.price),
                 rating: parseInt(req.body.rating),
                 category_id: parseInt(req.body.category_id),
+                color: color,
                 size: size
             };
 
+            console.log(request)
             const response = await ProductService.create(req.user!, request);
-
             res.status(200).json({
                 data: response
             });
@@ -131,4 +140,16 @@ export class ProductController {
         }
     }
     
+    static async getSimilarProducts(req: Request, res: Response, next: NextFunction) {
+        try {
+            const productId = Number(req.params.productId);
+            const response = await ProductService.getSimilarProducts(productId);
+    
+            res.status(200).json({
+                data: response
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
 }

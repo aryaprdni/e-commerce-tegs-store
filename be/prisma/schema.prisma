@@ -1,7 +1,7 @@
 generator client {
   provider = "prisma-client-js"
 }
-
+  
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -19,83 +19,108 @@ model User {
   province       String?    @db.VarChar(100)
   country        String?    @db.VarChar(100)
   postal_code    String?    @db.VarChar(100)
-  token          String?    @db.VarChar(100)
-  shopping_carts Shopping_cart[]
-  transactions   Transaction[]
+  token          String?    
+  shoppingCart ShoppingCart?
+  transactions Transaction[]
 
   @@map("users")
 }
+model Category {
+  id              Int         @id @default(autoincrement())
+  category_name   String      @db.VarChar(100)
+  products        Product[]
+  
+  @@map("categories")
+}
 
 model Product {
-  id      Int @id @default(autoincrement())
-  product_name String @db.VarChar(100)
-  description String @db.VarChar(100)
-  stock Int
-  price Int
-  color String[]
-  size String[]
-  image String[]
-  rating Int
-  shopping_carts Shopping_cart[]
+  id            Int           @id @default(autoincrement())
+  product_name  String        @db.VarChar(100)
+  description   String        @db.VarChar(100)
+  stock         Int
+  price         Int
+  color         String[]
+  size          String[]
+  image         String[]
+  rating        Int
 
-  category Category @relation(fields: [category_id], references: [id])
-  category_id Int
+  category      Category      @relation(fields: [category_id], references: [id])
+  category_id   Int
 
-  transaction_items Transaction_item[]
+  ShoppingCarts ShoppingCartItem[]
+
+  Transaction TransactionsItem[]
 
   @@map("products")
 }
 
-model Category {
-  id Int @id @default(autoincrement())
-  category_name String @db.VarChar(100)
-  products Product[]
 
-  @@map("categories")
-}
+model ShoppingCart {
+  id            Int           @id @default(autoincrement())
+  quantity      Int
+  total         Int
 
-model Shopping_cart {
-  id Int @id @default(autoincrement())
-  total Int
-  user_email String @db.VarChar(100)
-  products Product[]
+  user          User          @relation(fields: [user_email], references: [email])
+  user_email    String @unique
 
-  user User @relation(fields: [user_email], references: [email])
-
+  products ShoppingCartItem[]
+  
   @@map("shopping_carts")
 }
 
-model Transaction {
-  id Int @id @default(autoincrement())
+model ShoppingCartItem {
+  quantity Int
   total Int
-  status String @db.VarChar(100)
-  snap_token String? @db.VarChar(100)
-  snap_redirect_url String? @db.VarChar(100)
-  payment_method String? @db.VarChar(100)
-  created_at DateTime? @default(now()) @db.Timestamp(0)
-  updated_at DateTime? @default(now()) @db.Timestamp(0)
 
-  user_email       String     @db.VarChar(100)
-  user             User       @relation(fields: [user_email], references: [email])
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
 
-  transaction_items Transaction_item[]
+  shoppingCart ShoppingCart @relation(fields: [shoppingCartId], references: [id])
+  shoppingCartId Int
+
+  @@id([productId, shoppingCartId])
+  @@map("shoppingCartItems")
+}
+
+model Transaction {
+  id         Int                 @id @default(autoincrement())
+  total Int
+  status transactions_status
+  customer_name String @db.VarChar(255)
+  customer_email String @db.VarChar(255)
+  snap_token String? @db.VarChar(255)
+  snap_redirect_url String? @db.VarChar(255)
+  payment_method String? @db.VarChar(110)
+  createad_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  product TransactionsItem[]
+
+  user User @relation(fields: [user_email], references: [email])
+  user_email String
 
   @@map("transactions")
 }
 
-model Transaction_item {
-  id Int @id @default(autoincrement())
-  product_name String @db.VarChar(100)
+model TransactionsItem {
+  product_name String @db.VarChar(255)
   price Int
   quantity Int
-  created_at DateTime? @default(now()) @db.Timestamp(0)
-  updated_at DateTime? @default(now()) @db.Timestamp(0)
+  createad_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
 
-  product       Product    @relation(fields: [product_id], references: [id])
-  product_id    Int
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+  
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+  transactionId Int
 
-  transaction   Transaction @relation(fields: [transaction_id], references: [id])
-  transaction_id Int
+  @@id([productId, transactionId])
+  @@map("transactionsitem")
+}
 
-   @@map("transaction_items")
+enum transactions_status {
+  PENDING_PAYMENT
+  PAID
+  CANCELED
 }
