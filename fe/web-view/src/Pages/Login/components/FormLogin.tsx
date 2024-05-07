@@ -42,7 +42,7 @@ export const FormLogin = () => {
               color={"#fff"}
               _hover={{ bg: "green.400" }}
             >
-              Register
+              Login
             </Button>
           </FormControl>
         </Box>
@@ -77,7 +77,7 @@ export const FormLogin = () => {
                   marginLeft: "2px",
                 }}
               >
-                Sign up
+                Register
               </span>
             </Link>
           </Text>

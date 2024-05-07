@@ -45,7 +45,7 @@ export const FormRegis = () => {
                   marginLeft: "2px",
                 }}
               >
-                Sign in
+                Login
               </span>
             </Link>
           </Text>

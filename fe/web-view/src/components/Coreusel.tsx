@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { ICorousel } from "../types/interface";
 
-function PrevArrow(props: any) {
+function PrevArrow(props: ICorousel) {
   const { className, style, onClick } = props;
   return (
     <Box

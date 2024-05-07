@@ -19,15 +19,9 @@ export interface ICardShop {
   reting?: number;
 }
 
-export interface ICardCart {
-  id: number;
-  image: string;
-  name: string;
-  price: number;
-}
-
 export interface ICorousel {
   className?: React.StyleHTMLAttributes<HTMLDivElement>["className"];
-  style?: React.CSSProperties;
+
   onClick?: () => void;
+  style?: React.StyleHTMLAttributes<HTMLDivElement>["style"];
 }
