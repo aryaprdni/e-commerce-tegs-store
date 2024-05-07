@@ -15,6 +15,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/user" element={<UserPage />} />
+        <Route path="/shopping-card" element={<ShoppingCard />} />
+        <Route path="/product-detail" element={<ProductDetail />} />
       </Routes>
     </>
   );

@@ -7,6 +7,7 @@ export const cardShop: ICardShop[] = [
     name: "Dress High Atasan T-Shirt Polos",
     price: 200000,
     reting: 4,
+    stock: 20,
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const cardShop: ICardShop[] = [
     name: "Baju Atasan T-Shirt Polos",
     price: 230000,
     reting: 5,
+    stock: 20,
   },
 
   {
@@ -22,6 +24,7 @@ export const cardShop: ICardShop[] = [
     name: "Baju Atasan T-Shirt Polos",
     price: 230000,
     reting: 5,
+    stock: 20,
   },
 
   {
@@ -30,5 +33,6 @@ export const cardShop: ICardShop[] = [
     name: "Baju Atasan T-Shirt Polos",
     price: 230000,
     reting: 5,
+    stock: 20,
   },
 ];
