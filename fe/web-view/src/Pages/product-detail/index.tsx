@@ -1,4 +1,4 @@
-import { Box, Container, Flex, SimpleGrid, Text} from "@chakra-ui/react";
+import { Box, Container, Flex, Text} from "@chakra-ui/react";
 import ProductDetailComps from "./components/product-detail";
 import InformationDescription from "./components/information-description";
 import { useProductDetail } from "./hooks/product-detail";

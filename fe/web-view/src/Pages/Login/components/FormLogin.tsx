@@ -8,7 +8,6 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
@@ -55,6 +54,9 @@ export const FormLogin = () => {
           mt={2}
           leftIcon={<FcGoogle size={25} />}
           variant="outline"
+          onClick={() => {
+            window.location.href = "http://localhost:3000/auth/google";
+          }}
         >
           <Text fontWeight={500}> Google</Text>
         </Button>

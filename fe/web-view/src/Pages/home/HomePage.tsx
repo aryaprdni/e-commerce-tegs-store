@@ -8,8 +8,22 @@ import { Tag } from "../../components/Tag";
 import { Categori } from "./Components/Categori";
 import { Informasi } from "./Components/Informasi";
 import { ParallaxComponent } from "./Components/Parallax ";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+
+        if (token) {
+            localStorage.setItem('authToken', token);
+            navigate('/');
+        }
+    }, [navigate]);
+
   return (
     <>
       <Box w={"100%"} h={"100%"} maxH={"100vh"}>

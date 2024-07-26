@@ -21,6 +21,16 @@ export class UserService {
             throw new ResponseError(400, "Email already exists");
         }
 
+        const verification = await prismaClient.emailVerification.findUnique({
+            where: {
+                email: registerRequest.email
+            }
+        });
+
+        if (!verification || !verification.verified) {
+            throw new ResponseError(400, "Please verify your email");
+        }
+
         registerRequest.password = await bcrypt.hash(registerRequest.password, 10);
 
         const user = await prismaClient.user.create({
