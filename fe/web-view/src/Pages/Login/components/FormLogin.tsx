@@ -55,7 +55,7 @@ export const FormLogin = () => {
           leftIcon={<FcGoogle size={25} />}
           variant="outline"
           onClick={() => {
-            window.location.href = "http://localhost:3000/auth/google";
+            window.location.href = "http://localhost:5000/auth/google";
           }}
         >
           <Text fontWeight={500}> Google</Text>

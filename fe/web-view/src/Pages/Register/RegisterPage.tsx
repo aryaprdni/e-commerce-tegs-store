@@ -2,13 +2,27 @@ import { useState } from "react";
 import { Box, Center, Flex, Image } from "@chakra-ui/react";
 import { FormReqVerify } from "./components/FormReqVerify";
 import { FormVerifyEmail } from "./components/FormVerifyEmail";
+import { FormRegister } from "./components/FormRegister";
+import { useStore } from "../../store/useStore";
 
 export const RegisterPage = () => {
   const [isVerificationSent, setIsVerificationSent] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const resetEmail = useStore(state => state.resetEmail);
 
   const handleVerificationSuccess = () => {
     setIsVerificationSent(true);
   };
+
+  const handleEmailVerified = () => {
+    setIsEmailVerified(true);
+  };
+
+  const handleBack = () => {
+    setIsVerificationSent(false);
+    setIsEmailVerified(false);
+    resetEmail();
+};
 
   return (
     <Box w={"100%"} h={"100vh"} minHeight={"100%"}>
@@ -43,10 +57,12 @@ export const RegisterPage = () => {
             // bg={"green"}
             m={"auto"}
           >
-            {isVerificationSent ? (
-              <FormVerifyEmail />
-            ) : (
+            {!isVerificationSent ? (
               <FormReqVerify onVerificationSuccess={handleVerificationSuccess} />
+            ) : !isEmailVerified ? (
+              <FormVerifyEmail onBack={handleBack} onEmailVerified={handleEmailVerified} />
+            ) : (
+              <FormRegister onBack={handleBack}/>
             )}
           </Box>
         </Flex>

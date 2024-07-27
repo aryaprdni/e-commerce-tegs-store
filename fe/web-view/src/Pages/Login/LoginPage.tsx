@@ -1,5 +1,4 @@
 import { Box, Center, Flex, Image } from "@chakra-ui/react";
-import { FormRegis } from "../Register/components/FormReqVerify";
 import { FormLogin } from "./components/FormLogin";
 
 export const LoginPage = () => {

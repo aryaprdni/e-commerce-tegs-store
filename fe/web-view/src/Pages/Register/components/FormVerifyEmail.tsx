@@ -16,8 +16,14 @@ import { MdMailOutline } from "react-icons/md";
 import { Controller } from "react-hook-form";
 import { API } from "../../../libs/axios";
 import { useStore } from "../../../store/useStore";
+import { FaArrowLeft } from "react-icons/fa6";
 
-export const FormVerifyEmail = () => {
+interface FormVerifyEmailProps {
+    onBack: () => void;
+    onEmailVerified: () => void;
+  }
+
+export const FormVerifyEmail = ({ onBack, onEmailVerified }: FormVerifyEmailProps) => {
     const { control, handleSubmit} = useVerifyEmailValidation();
     const { email } = useStore(state => ({ email: state.email }));
 
@@ -26,6 +32,7 @@ export const FormVerifyEmail = () => {
           const response = await API.post('/verify-email', { email, code: data.code });
           console.log(response)
           toast.success("Email verified successfully!");
+          onEmailVerified();
         } catch (error: any) {
             console.log(error)
           toast.error(error.response.data);
@@ -43,9 +50,12 @@ export const FormVerifyEmail = () => {
             boxShadow="md"
         >
             <Flex flexDirection="column" mb={4} textAlign="center" justifyContent="center" alignItems="center">
+                <Flex justifyContent={"left"} alignItems={"start"} mr={"400px"} mb={"30px"} onClick={onBack}>
+                    <FaArrowLeft fontSize={"25px"}/>
+                </Flex>
                 <MdMailOutline fontSize="50px" color={"green"}/>
                 <Text fontWeight="bold">Masukkan Kode Verifikasi</Text>
-                <Text>Kode verifikasi telah dikirim melalui e-mail ke mtkeker@gmail.com.</Text>
+                <Text>Kode verifikasi telah dikirim melalui e-mail ke {email}</Text>
             </Flex>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Controller

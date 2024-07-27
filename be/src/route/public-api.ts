@@ -15,7 +15,7 @@ publicRouter.post("/api/request-verification", AuthController.requestVerificatio
 // Verify Code Mail
 publicRouter.post("/api/verify-email", AuthController.verifyEmail);
 
-publicRouter.post("/api/users", UserController.register);
+publicRouter.post("/api/users/register", UserController.register);
 publicRouter.post("/api/users/login", UserController.login);
 
 

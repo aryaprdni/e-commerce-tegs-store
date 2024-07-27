@@ -24,7 +24,7 @@ export class AuthController {
             const oauth2Client = new google.auth.OAuth2(
                 process.env.GOOGLE_CLIENT_ID,
                 process.env.GOOGLE_CLIENT_SECRET,
-                'http://localhost:3000/auth/google/callback'
+                'http://localhost:5000/auth/google/callback'
             );
 
             const scopes = [
@@ -48,8 +48,8 @@ export class AuthController {
         try {
             const oauth2Client = new google.auth.OAuth2(
                 process.env.GOOGLE_CLIENT_ID,
-                process.env.GOOGLE_CLIENT_SECRET,
-                'http://localhost:3000/auth/google/callback'
+                process.env.GOOGLE_CLIENT_SECRET, 
+                'http://localhost:5000/auth/google/callback'
             );
 
             const { code } = req.query;

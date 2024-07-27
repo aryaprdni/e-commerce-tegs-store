@@ -18,18 +18,17 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../store/useStore";
 
-
 interface FormReqVerifyProps {
   onVerificationSuccess: () => void;
 }
 
 export const FormReqVerify = ({ onVerificationSuccess }: FormReqVerifyProps) => {
-  const { setEmail } = useStore(state => ({ setEmail : state.setEmail }));
+  const { setEmail } = useStore(state => ({ setEmail: state.setEmail, resetEmail: state.resetEmail }));
   const { control, handleSubmit } = useRequestVerificationValidation();
 
-  const onSubmit = async (data : any) => {
+  const onSubmit = async (data: any) => {
     try {
-      await API.post('/request-verification', { email : data.email });
+      await API.post('/request-verification', { email: data.email });
       toast.success("Token has been sent, check your email!");
       setEmail(data.email);
       onVerificationSuccess();
@@ -75,6 +74,7 @@ export const FormReqVerify = ({ onVerificationSuccess }: FormReqVerifyProps) => 
             w={"100%"}
             leftIcon={<FcGoogle size={25} />}
             variant="outline"
+            onClick={() => window.location.href = "http://localhost:5000/auth/google"}
           >
             <Text fontWeight={500}> Google</Text>
           </Button>
