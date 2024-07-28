@@ -1,6 +1,9 @@
 import { ZodType, z } from "zod";
 
 export class UserValidation {
+    static readonly VERIFYEMAIL: ZodType = z.object({
+        email: z.string().min(3).max(100),
+    })
 
     static readonly REGISTER : ZodType = z.object({
         email: z.string().min(3).max(100),

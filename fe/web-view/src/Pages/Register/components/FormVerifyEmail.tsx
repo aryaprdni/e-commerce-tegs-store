@@ -34,7 +34,7 @@ export const FormVerifyEmail = ({ onBack, onEmailVerified }: FormVerifyEmailProp
           toast.success("Email verified successfully!");
           onEmailVerified();
         } catch (error: any) {
-            console.log(error)
+          console.log(error)
           toast.error(error.response.data);
         }
     };

@@ -1,10 +1,22 @@
 import {Request, Response, NextFunction} from "express";
-import { CreateUserRequest, LoginUserRequest, UpdateUserRequest } from "../model/user_model";
+import { CreateUserRequest, LoginUserRequest, UpdateUserRequest, VerifyEmailRequest } from "../model/user_model";
 import { UserService } from "../service/user-service";
 import { UserRequest } from "../type/user-request";
 import cloudinary from "../libs/cloudinary";
 
 export class UserController {
+    static async verifyEmail(req: Request, res: Response, next: NextFunction) {
+        try {
+            const request : VerifyEmailRequest = req.body as VerifyEmailRequest;
+            const response = await UserService.verifyEmail(request);
+            res.status(200).json({
+                data: response
+            })
+        } catch (e) {
+            next(e);
+        }
+    }
+
     static async register(req: Request, res: Response, next: NextFunction) {
         try {
             const request: CreateUserRequest = req.body as CreateUserRequest;

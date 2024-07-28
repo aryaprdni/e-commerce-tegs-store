@@ -1,13 +1,29 @@
 import { User } from "@prisma/client";
 import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response.error";
-import { CreateUserRequest, LoginUserRequest, UpdateUserRequest, UserResponse, toUserResponse } from "../model/user_model";
+import { CreateUserRequest, LoginUserRequest, UpdateUserRequest, UserResponse, VerifyEmailRequest, toUserResponse } from "../model/user_model";
 import { UserValidation } from "../validation/user-validation";
 import { Validation } from "../validation/validation";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export class UserService {
+    static async verifyEmail(request: VerifyEmailRequest) : Promise<UserResponse> {
+        const verifyEmailRequest = Validation.validate(UserValidation.VERIFYEMAIL, request);
+        
+        const user = await prismaClient.user.findUnique({
+            where: {
+                email: verifyEmailRequest.email
+            }
+        })
+
+        if (!user) {
+            throw new ResponseError(400, "Email not registered");
+        }
+
+        return toUserResponse(user);
+    }
+    
     static async register(request: CreateUserRequest) : Promise<UserResponse> {
         const registerRequest = Validation.validate(UserValidation.REGISTER, request);
 

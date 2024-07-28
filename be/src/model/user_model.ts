@@ -14,6 +14,10 @@ export type UserResponse = {
     token? : string;
 }
 
+export type VerifyEmailRequest = {
+    email: string;
+}
+
 export type CreateUserRequest = {
     email: string;
     username : string;
