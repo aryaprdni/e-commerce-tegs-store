@@ -4,6 +4,7 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { ICorousel } from "../../../types/interface";
 import { useProductDetail } from "../hooks/product-detail";
 import { CardShop } from "../../../components/CardShop";
+import { useParams } from "react-router-dom";
 
 function PrevArrow(props: ICorousel) {
   const { className, style, onClick } = props;
@@ -34,7 +35,8 @@ function NextArrow(props: ICorousel) {
 }
 
 export const CoreuselDetail = () => {
-  const { productSimilarData } = useProductDetail();
+  const { productId } = useParams();
+  const { productSimilarData } = useProductDetail(productId as string);
 
   const settings = {
     dots: true,
@@ -45,15 +47,13 @@ export const CoreuselDetail = () => {
     speed: 400,
     autoplaySpeed: 3000,
     arrows: false,
-    // prevArrow: <PrevArrow />,
-    // nextArrow: <NextArrow />,
     responsive: [
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 1,
           arrows: true,
-          prevArrow: <PrevArrow />, // Gunakan komponen PrevArrow untuk panah sebelumnya
+          prevArrow: <PrevArrow />,
           nextArrow: <NextArrow />,
         },
       },

@@ -4,7 +4,7 @@ import { UserController } from "../controller/user-controller";
 import upload from "../middleware/upload-file";
 import { ProductController } from "../controller/product-controller";
 import { ShoppingCartController } from "../controller/shopping-cart-controller";
-import { TransactionController } from "../controller/transaction-controller";
+// import { TransactionController } from "../controller/transaction-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware)
@@ -22,6 +22,8 @@ apiRouter.delete("/api/products/:productId(\\d+)", ProductController.delete);
 // Shopping Cart API
 apiRouter.post("/api/shopping-cart", ShoppingCartController.addToCart)
 apiRouter.get("/api/shopping-cart", ShoppingCartController.get)
+apiRouter.put("/api/shopping-cart", ShoppingCartController.updateCartItem)
+apiRouter.delete("/api/shopping-cart", ShoppingCartController.removeItemFromCart)   
 
 // Transaction API
-apiRouter.post("/api/transaction", TransactionController.createTransaction)
+// apiRouter.post("/api/transaction", TransactionController.createTransaction)

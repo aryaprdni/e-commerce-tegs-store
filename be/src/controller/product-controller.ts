@@ -40,7 +40,8 @@ export class ProductController {
                 rating: parseInt(req.body.rating),
                 category_id: parseInt(req.body.category_id),
                 color: color,
-                size: size
+                size: size,
+                sales: parseInt(req.body.sales)
             };
 
             console.log(request)
@@ -127,10 +128,32 @@ export class ProductController {
             const request: SearchProductRequest = {
                 product_name: req.query.product_name as string,
                 description: req.query.description as string,
-                category: { category_name: req.query.category_name as string }
+                category: { category_name: req.query.category_name as string },
+                min_price: req.query.min_price ? parseFloat(req.query.min_price as string) : undefined,
+                max_price: req.query.max_price ? parseFloat(req.query.max_price as string) : undefined,
+                sort: req.query.sort as string,
+                page: req.query.page ? parseInt(req.query.page as string) : undefined,
+                limit: req.query.limit ? parseInt(req.query.limit as string) : undefined,
             }
-
+    
             const response = await ProductService.search(request);
+    
+            res.status(200).json({
+                data: response.products,
+                total: response.total,
+                currentPage: request.page || 1,
+                totalPages: Math.ceil(response.total / (request.limit || 12)),
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
+    
+    
+    static async getSimilarProducts(req: Request, res: Response, next: NextFunction) {
+        try {
+            const productId = Number(req.params.productId);
+            const response = await ProductService.getSimilarProducts(productId);
     
             res.status(200).json({
                 data: response
@@ -139,11 +162,24 @@ export class ProductController {
             next(e);
         }
     }
-    
-    static async getSimilarProducts(req: Request, res: Response, next: NextFunction) {
+
+    static async getBestProducts(req: Request, res: Response, next: NextFunction) {
         try {
-            const productId = Number(req.params.productId);
-            const response = await ProductService.getSimilarProducts(productId);
+            const limit = Number(req.query.limit) || 10;
+            const response = await ProductService.getBestProducts(limit);
+    
+            res.status(200).json({
+                data: response
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    static async getRecommendedProducts(req: Request, res: Response, next: NextFunction) {
+        try {
+            const limit = Number(req.query.limit) || 10;
+            const response = await ProductService.getRecommendedProducts(limit);
     
             res.status(200).json({
                 data: response

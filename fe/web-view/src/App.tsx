@@ -5,10 +5,12 @@ import { RegisterPage } from "./Pages/Register/RegisterPage";
 import { LoginPage } from "./Pages/Login/LoginPage";
 import { SearchPage } from "./Pages/Search/SearchPage";
 import { UserPage } from "./Pages/User/UserPage";
-import { ShoppingCard } from "./Pages/shoppingCard/ShoppingCard";
 import ProductDetail from "./Pages/product-detail";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
+import CategoryPage from "./Pages/category/CategoryPage";
+import { ShoppingCart } from "./Pages/shoppingCart/ShoppingCart";
+import Checkout from "./Pages/checkout";
 
 function App() {
   return (
@@ -19,8 +21,10 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/user" element={<UserPage />} />
-        <Route path="/shopping-card" element={<ShoppingCard />} />
-        <Route path="/product-detail" element={<ProductDetail />} />
+        <Route path="/shopping-cart" element={<ShoppingCart />} />
+        <Route path="/product-detail/:productId" element={<ProductDetail />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <ToastContainer />
     </>

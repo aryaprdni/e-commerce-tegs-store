@@ -10,10 +10,10 @@ export type ProductResponse = {
     color: string[];
     description: string | null;
     rating: number | null;
+    sales: number;
     category: {
         id: number;
         category_name: string;
-        parentCategoryId: number | null;
     } | null;
 };
 
@@ -27,6 +27,7 @@ export type CreateProductRequest = {
     description: string;
     rating: number;
     color: string[];
+    sales: number;
     category_id: number;
 }
 
@@ -40,16 +41,20 @@ export type UpdateProductRequest = {
     color?: string[];
     description?: string;
     rating?: number;
+    sales?: number;
     category_id?: number;
 }
 
-export type SearchProductRequest = {
-    product_name? : string;
+export interface SearchProductRequest {
+    query?: string;
+    product_name?: string;
     description?: string;
-    category?: {
-        category_name?: string;
-    }
-    // category_name: string;
+    category?: { category_name?: string };
+    min_price?: number; 
+    max_price?: number;
+    sort?: string;
+    page?: number;
+    limit?: number;
 }
 
 export function toProductResponse(product: Product & { category?: {
@@ -65,11 +70,11 @@ export function toProductResponse(product: Product & { category?: {
         image: product.image,
         description: product.description,
         rating: product.rating,
+        sales: product.sales,
         category: product.category
             ? {
                   id: product.category.id,
                   category_name: product.category.category_name,
-                  parentCategoryId: null,
               }
             : null,
     };

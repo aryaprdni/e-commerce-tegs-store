@@ -1,7 +1,6 @@
 import { User } from "@prisma/client";
 
 export type UserResponse = {
-    username: string | null;
     full_name: string | null;
     email: string;
     phone_number: number | null;
@@ -44,7 +43,6 @@ export type UpdateUserRequest = {
 
 export function toUserResponse(user: User): UserResponse {
     return {
-        username: user.username,
         full_name: user.full_name,
         email: user.email,
         phone_number: user.phone_number,

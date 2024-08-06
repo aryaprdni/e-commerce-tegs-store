@@ -10,13 +10,29 @@ export class ProductService {
         const createProductRequest = Validation.validate(ProductValidation.CREATE, request);
     
         const record = {
-            ...createProductRequest,
+            product_name: createProductRequest.product_name,
+            stock: createProductRequest.stock,
+            price: createProductRequest.price,
+            size: createProductRequest.size,
+            color: createProductRequest.color,
+            image: createProductRequest.image,
+            description: createProductRequest.description,
+            rating: createProductRequest.rating,
+            sales: createProductRequest.sales,
+            category: {
+                connect: {
+                    id: createProductRequest.category_id
+                }
+            }
         };
-    
+
         const product = await prismaClient.product.create({
-            data: record
+            data: record,
+            include: {
+                category: true
+            }
         });
-        
+
         return toProductResponse(product);
     }
     
@@ -34,6 +50,7 @@ export class ProductService {
 
         return product
     }
+
     static async update(user: User, request: UpdateProductRequest): Promise<ProductResponse> {
         const updateRequest = Validation.validate(ProductValidation.UPDATE, request);
 
@@ -101,60 +118,84 @@ export class ProductService {
         return toProductResponse(product);
     }
 
-    static async search(request: SearchProductRequest): Promise<ProductResponse[]> {
-        const searchRequest = Validation.validate(ProductValidation.SEARCH, request);
-
-        const filters: any[]= [];
-
-        if (searchRequest.product_name) {
-            filters.push({
+    static async search(request: SearchProductRequest): Promise<{ products: ProductResponse[]; total: number }> {
+    const filters: any = {
+        OR: [
+            {
                 product_name: {
-                    contains: searchRequest.product_name
-                }
-            });
-        }
-
-        if (searchRequest.description) {
-            filters.push({
-                description: {
-                    contains: searchRequest.description
-                }
-            });
-        }
-
-        console.log("category_name", searchRequest.category?.category_name);
-        console.log("Type of category_name:", typeof searchRequest.category?.category_name);
-        console.log("Value of category_name:", searchRequest.category?.category_name);
-
-
-        if (searchRequest.category && searchRequest.category.category_name) {
-            const categoryName = searchRequest.category.category_name.toString();
-            filters.push({
-                category: {
-                    category_name: categoryName
-                }
-            });
-        }
-    
-        const products = await prismaClient.product.findMany({
-            where: {
-                AND: filters,
+                    contains: request.product_name,
+                    mode: 'insensitive',
+                },
             },
-            include: {
-                category: true
-            }
-        });
+            {
+                description: {
+                    contains: request.description,
+                    mode: 'insensitive',
+                },
+            },
+            {
+                category: {
+                    category_name: {
+                        contains: request.category?.category_name,
+                        mode: 'insensitive',
+                    },
+                },
+            },
+        ],
+    };
 
-        const productResponses = products.map(product => toProductResponse(product));
-
-        return productResponses;
+    if (request.min_price !== undefined) {
+        filters.price = {
+            gte: request.min_price,
+        };
     }
+
+    if (request.max_price !== undefined) {
+        filters.price = {
+            lte: request.max_price,
+        };
+    }
+
+    const sort: any = {};
+    if (request.sort === 'price_asc') {
+        sort.price = 'asc';
+    } else if (request.sort === 'price_desc') {
+        sort.price = 'desc';
+    }
+
+    const page = request.page || 1;
+    const limit = request.limit || 12;
+    const skip = (page - 1) * limit;
+
+    const [products, total] = await Promise.all([
+        prismaClient.product.findMany({
+            where: filters,
+            include: {
+                category: true,
+            },
+            orderBy: sort,
+            skip,
+            take: limit,
+        }),
+        prismaClient.product.count({
+            where: filters,
+        }),
+    ]);
+
+    const productResponses = products.map(product => toProductResponse(product));
+
+    return { products: productResponses, total };
+}
+
     
     static async getSimilarProducts(productId: number): Promise<ProductResponse[]> {
         const product = await prismaClient.product.findUnique({
             where: {
                 id: productId
             },
+            include: {
+                category: true
+            }
         })
 
         if (!product) {
@@ -166,7 +207,10 @@ export class ProductService {
                 category_id: product.category_id,
                 id: {
                     not: productId
-                }
+                },
+            },
+            include: {
+                category: true
             },
             take: 5
         });
@@ -174,5 +218,43 @@ export class ProductService {
         const productResponses = similarProducts.map(product => toProductResponse(product));
     
         return productResponses;
+    }
+    
+    static async getBestProducts(limit: number = 10) : Promise<ProductResponse[]> {
+        const products = await prismaClient.product.findMany({
+            where: {
+                sales: {
+                    gt: 0
+                }
+            },
+            orderBy: {
+                sales: 'desc'
+            },
+            take: limit,
+            include: {
+                category: true
+            }
+        });
+
+        return products.map(product => toProductResponse(product));
+    }
+
+    static async getRecommendedProducts(limit: number = 10) : Promise<ProductResponse[]> {
+        const products = await prismaClient.product.findMany({
+            where: {
+                rating: {
+                    gt: 0
+                }
+            },
+            orderBy: {
+                rating: 'desc'
+            },
+            take: limit,
+            include: {
+                category: true
+            }
+        });
+
+        return products.map(product => toProductResponse(product));
     }
 }

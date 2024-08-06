@@ -1,28 +1,22 @@
 import { Box, Image } from "@chakra-ui/react";
-import { cardShop } from "../../Json/CardShop";
 import { categori } from "../../Json/Categori";
 import { Layout } from "../../Layout";
-import { CardShop } from "../../components/CardShop";
 import { Coreusel } from "../../components/Coreusel";
 import { Tag } from "../../components/Tag";
 import { Categori } from "./Components/Categori";
 import { Informasi } from "./Components/Informasi";
 import { ParallaxComponent } from "./Components/Parallax ";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import useAuthStore from "../../store/useAuthStore";
+import useBestProducts from "./hooks/useBestProducts";
+import useRecommendedProducts from "./hooks/useRecommendedProducts";
+import { ProductsCarousel } from "../../components/ProductsCaraousel";
 
 export const HomePage = () => {
-  const navigate = useNavigate();
-
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get('token');
-
-        if (token) {
-            localStorage.setItem('authToken', token);
-            navigate('/');
-        }
-    }, [navigate]);
+  const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+  console.log("user: ", user, "token: ", token);
+  const { bestProducts } = useBestProducts();
+  const { recommendedProducts } = useRecommendedProducts();
 
   return (
     <>
@@ -64,7 +58,7 @@ export const HomePage = () => {
                 // h={"auto"}
                 display={"flex"}
                 justifyContent={"center"}
-                flexDirection={{ base: "column", lg: "column", xl: "row" }}
+                flexDirection={{ base: "column", lg: "row", xl: "row" }}
                 alignItems={"center"}
                 mt={5}
               >
@@ -99,6 +93,7 @@ export const HomePage = () => {
             w={"100%"}
             h={{ base: "auto", md: "100%", lg: "auto", xl: "auto" }}
             my={5}
+            mb={10}
           >
             <Box w={"90%"} mx={"auto"}>
               {/* Tag */}
@@ -119,9 +114,7 @@ export const HomePage = () => {
                 gap={4}
                 mt={4}
               >
-                {cardShop.map((item) => (
-                  <CardShop key={item.id} {...item} />
-                ))}
+                <ProductsCarousel products={bestProducts} />
               </Box>
             </Box>
           </Box>
@@ -156,9 +149,7 @@ export const HomePage = () => {
                 gap={4}
                 mt={4}
               >
-                {cardShop.map((item) => (
-                  <CardShop key={item.id} {...item} />
-                ))}
+                <ProductsCarousel products={recommendedProducts} />
               </Box>
             </Box>
           </Box>

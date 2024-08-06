@@ -1,31 +1,63 @@
-import React, { useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { API } from '../../../libs/axios';
+import useAuthStore from '../../../store/useAuthStore';
+import { useLoginValidation } from './useLoginValidation';
 
-const AuthSuccess = () => {
-    const navigate = useNavigate();
+export const useLogin = () => {
+  const [show, setShow] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isEmailEditable, setIsEmailEditable] = useState(false);
+  const { control, handleSubmit } = useLoginValidation(!isEmailValid);
+  const navigate = useNavigate();
+  const setToken = useAuthStore((state) => state.setToken);
+  const setUser = useAuthStore((state) => state.setUser);
 
-    useEffect(() => {
-        console.log('Effect started');
+  const handleClick = () => setShow(!show);
 
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get('token');
+  const onSubmitEmail = async (data: any) => {
+    try {
+      const response = await API.post('/users/verify-email', { email: data.email });
+      if (response.status === 200) {
+        setIsEmailValid(true);
+        setIsPasswordVisible(true);
+        setIsEmailEditable(false);
+      }
+    } catch (error: any) {
+      toast.error("Email not registered");
+    }
+  }
 
-        console.log('Token from URL:', token);
+  const onSubmitPassword = async (data: any) => {
+    try {
+      const response = await API.post('/users/login', { email: data.email, password: data.password });
+      if (response.status === 200) {
+        setToken(response.data.data.token);
+        setUser(response.data.data);
+        navigate('/');
+      } else {
+        toast.error("Login failed");
+      }
+    } catch (error: any) {
+      toast.error(error.response.data.errors);
+    }
+  };
 
-        if (token) {
-            localStorage.setItem('authToken', token);
-            console.log('Token saved to localStorage:', localStorage.getItem('authToken'));
-
-            navigate('/');
-        } else {
-            console.log('No token found in URL, redirecting to /login');
-            navigate('/login');
-        }
-
-        console.log('Effect completed');
-    }, [navigate]);
-
-    return <div>Loading...</div>;
+  return {
+    show,
+    isEmailValid,
+    isPasswordVisible,
+    isEmailEditable,
+    control,
+    handleSubmit,
+    handleClick,
+    setIsEmailEditable,
+    setIsEmailValid,
+    onSubmitEmail,
+    onSubmitPassword,
+  };
 };
-
-export default AuthSuccess;

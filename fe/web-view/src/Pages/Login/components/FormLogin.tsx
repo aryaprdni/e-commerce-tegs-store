@@ -14,55 +14,25 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
-import { useLoginValidation } from "../hooks/useLoginValidation";
-import { toast } from "react-toastify";
-import { API } from "../../../libs/axios";
-import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
+import React from "react";
+import { useLogin } from "../hooks/useLogin";
 
-export const FormLogin = () => {
-  const [show, setShow] = React.useState(false)
-  const handleClick = () => setShow(!show)
-
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isEmailEditable, setIsEmailEditable] = useState(false);
-  const { control, handleSubmit, setValue } = useLoginValidation(!isEmailValid);
-  const navigate = useNavigate();
-
-  const onSubmitEmail = async (data: any) => {
-    try {
-      const response = await API.post('/users/verify-email', { email: data.email });
-      console.log("API response:", response);
-      if (response.status === 200) {
-        setIsEmailValid(true);
-        setIsPasswordVisible(true);
-        setIsEmailEditable(false);
-      }
-    } catch (error: any) {
-      console.log("Error:", error);
-      toast.error("Email not registered");
-    }
-  }
-
-  const onSubmitPassword = async (data: any) => {
-    try {
-      const response = await API.post('/users/login', { email: data.email, password: data.password });
-      console.log("Login response:", response);
-      if (response.status === 200) {
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        navigate('/');
-      } else {
-        toast.error("Login failed");
-      }
-    } catch (error: any) {
-      console.log("Login error:", error);
-      toast.error(error.response.data.errors);
-    }
-  };
+export const FormLogin: React.FC = () => {
+  const {
+    show,
+    isEmailValid,
+    isEmailEditable,
+    control,
+    handleSubmit,
+    handleClick,
+    setIsEmailEditable,
+    setIsEmailValid,
+    onSubmitEmail,
+    onSubmitPassword,
+  } = useLogin();
 
   return (
     <Box w={"100%"} h={"100%"}>
@@ -167,11 +137,11 @@ export const FormLogin = () => {
                         </Button>
                       </InputRightElement>
                     </InputGroup>
-                      {fieldState.error && (
+                    {fieldState.error && (
                       <FormErrorMessage>
                         {fieldState.error.message}
                       </FormErrorMessage>
-                      )}
+                    )}
                   </FormControl>
                 )}
               />

@@ -1,9 +1,12 @@
 import { Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { CiCreditCard1, CiDeliveryTruck } from "react-icons/ci";
 import { FaHandshake, FaHeadphones, FaUncharted } from "react-icons/fa";
-import { IProductDetail } from "../../../types/product-detail";
+    
+interface InformationDescriptionProps {
+    description?: string;
+}
 
-const InformationDescription = (props: IProductDetail) => {
+const InformationDescription = (props: InformationDescriptionProps) => {
     return (
         <Flex justifyContent="center">
             <Tabs>

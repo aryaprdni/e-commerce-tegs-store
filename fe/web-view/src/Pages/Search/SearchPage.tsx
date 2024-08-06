@@ -3,18 +3,23 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Flex,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { Layout } from "../../Layout";
 import { FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { cardShop } from "../../Json/CardShop";
 import { CardShop } from "../../components/CardShop";
-import { Tag } from "../../components/Tag";
+import { IProductDetail } from "../../types/product-detail";
+import useProductsResult from "../../store/useProductsResult";
+import useSearch from "./hooks/useSearch";
+import Pagination from "./components/Pagination";
 
 export const SearchPage = () => {
+  const { handlePageChange, searchParams } = useSearch();
+  const productsResult = useProductsResult((state) => state.productsResult);
+
+  const currentPage = searchParams.page;
+  
   return (
     <Box w={"100%"} h={"100%"} minHeight={"100vh"}>
       <Layout>
@@ -61,50 +66,24 @@ export const SearchPage = () => {
 
             <Box
               w={"100%"}
-              h={{ base: "auto", md: "100%", lg: "auto", xl: "auto" }}
+              h={"100%"}
               my={4}
+              display={"flex"}
+              flexWrap={"wrap"}
+              gap={4}
+              justifyContent={"center"}
             >
-              <Box w={"100%"}>
-                <Box
-                  w={"100%"}
-                  h={"100%"}
-                  display={"flex"}
-                  justifyContent={"space-evenly"}
-                  alignItems={"center"}
-                  flexWrap={{
-                    base: "wrap",
-                    md: "wrap",
-                    lg: "nowrap",
-                    xl: "nowrap",
-                  }}
-                  gap={4}
-                  mt={4}
-                >
-                  {cardShop.map((item) => (
-                    <CardShop key={item.id} {...item} />
-                  ))}
+              {productsResult?.data?.map((item: IProductDetail) => (
+                <Box key={item.id} flexBasis={{ base: "100%", sm: "48%", md: "23%" }} mb={4}>
+                  <CardShop {...item} />
                 </Box>
+              ))}
 
-                <Box
-                  w={"100%"}
-                  h={"100%"}
-                  display={"flex"}
-                  justifyContent={"space-evenly"}
-                  alignItems={"center"}
-                  flexWrap={{
-                    base: "wrap",
-                    md: "wrap",
-                    lg: "nowrap",
-                    xl: "nowrap",
-                  }}
-                  gap={4}
-                  mt={4}
-                >
-                  {cardShop.map((item) => (
-                    <CardShop key={item.id} {...item} />
-                  ))}
-                </Box>
-              </Box>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={productsResult.totalPages}
+                onPageChange={handlePageChange} 
+              />
             </Box>
           </Box>
         </Box>

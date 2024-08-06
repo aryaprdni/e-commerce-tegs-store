@@ -11,6 +11,7 @@ export class ProductValidation {
         image: z.array(z.string()),
         description: z.string().optional(),
         rating: z.number().optional(),
+        sales: z.number().optional(),
         category_id: z.number().min(1)
     })
 
@@ -23,6 +24,7 @@ export class ProductValidation {
         image: z.array(z.string()).optional(),
         description: z.string().optional(),
         rating: z.number().optional(),
+        sales: z.number().optional(),
         category_id: z.number().min(1).optional()
     })
 

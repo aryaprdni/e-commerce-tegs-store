@@ -9,7 +9,6 @@ datasource db {
 
 model User {
   email          String     @id @db.VarChar(100)
-  username       String?    @db.VarChar(100)
   full_name      String?    @db.VarChar(100)
   password       String    @db.VarChar(100)
   phone_number   Int?       
@@ -58,7 +57,8 @@ model Product {
   color         String[]
   size          String[]
   image         String[]
-  rating        Int
+  rating        Float @default(0)
+  sales         Int @default(0)
 
   category      Category      @relation(fields: [category_id], references: [id])
   category_id   Int
@@ -87,6 +87,8 @@ model ShoppingCart {
 model ShoppingCartItem {
   quantity Int
   total Int
+  selectedSize String?
+  selectedColor String?
 
   product Product @relation(fields: [productId], references: [id])
   productId Int

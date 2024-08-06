@@ -1,61 +1,71 @@
-import { Box, Divider, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Grid, Image, Text } from "@chakra-ui/react";
+import useShoppingCart from "../../shoppingCart/hooks/useShoppingCart";
 
 const Product = () => {
+    const { productsInShoppingCart } = useShoppingCart();
+    const { products, total } = productsInShoppingCart;
+
     return (
-        <>  
-            <Box>
-                <Flex alignItems="center" justifyContent="space-evenly" mb={4}>
-                    <Text>Product</Text>
-                    <Text>Unit Price</Text>
-                    <Text>Quantity</Text>
-                    <Text>Total</Text>
-                </Flex>
+        <Box>
+            {/* Header */}
+            <Grid 
+                templateColumns="2fr 1fr 1fr 1fr" 
+                gap={4} 
+                mb={4} 
+                p={4} 
+                fontWeight="bold" 
+                borderBottom="1px solid #ddd"
+                pb={2}
+            >
+                <Text>Product</Text>
+                <Text textAlign="center">Unit Price</Text>
+                <Text textAlign="center">Quantity</Text>
+                <Text textAlign="center">Total</Text>
+            </Grid>
+            
+            {/* Product List */}
+            <Box border="1px solid #ddd" p={4}>
+                {products.map((item) => (
+                    <Grid
+                        key={item.products.id}
+                        templateColumns="2fr 1fr 1fr 1fr"
+                        gap={4}
+                        alignItems="center"
+                        mb={4}
+                    >
+                        {/* Product Details */}
+                        <Flex alignItems="center" gap={4}>
+                            <Image
+                                src={item.products.image![0]}
+                                width={70}
+                                height={70}
+                                alt="Product Image"
+                            />
+                            <Box>
+                                <Text fontSize="md">{item.products.product_name}</Text>
+                                <Text fontSize="sm">Size: {item.products.size}</Text>
+                                <Text fontSize="sm">Color: {item.products.color}</Text>
+                            </Box>
+                        </Flex>
+                        
+                        {/* Unit Price */}
+                        <Text textAlign="center">${item.products.price}</Text>
+                        
+                        {/* Quantity */}
+                        <Text textAlign="center">{item.quantity}</Text>
+                        
+                        {/* Total */}
+                        <Text textAlign="center">${item.sub_total}</Text>
+                    </Grid>
+                ))}
                 
-                <Box border={"1px solid #ddd"} p={4}>
-                    <Flex alignItems="center" justifyContent="space-evenly" >
-                        <Flex alignItems="center">
-                            <Image src='../../../src/assets/img/combed24s.png' width={70} height={70}/>
-                            <Box ml={4}>
-                                <Text>T-shirt</Text>
-                                <Text>Size: XL</Text>
-                                <Text>Color: White</Text>
-                            </Box>
-                        </Flex>
-                        <Text>$72.5</Text>
-                        <Text>2</Text>
-                        <Text>$72.5</Text>
-                    </Flex>
-                    <Flex alignItems="center" justifyContent="space-evenly" mt={4}>
-                        <Flex alignItems="center">
-                            <Image src='../../../src/assets/img/combed24s.png' width={70} height={70}/>
-                            <Box ml={4}>
-                                <Text>T-shirt</Text>
-                                <Text>Size: XL</Text>
-                                <Text>Color: White</Text>
-                            </Box>
-                        </Flex>
-                        <Text>$72.5</Text>
-                        <Text>2</Text>
-                        <Text>$72.5</Text>
-                    </Flex>
-                    <Flex alignItems="center" justifyContent="space-evenly" mt={4}>
-                        <Flex alignItems="center">
-                            <Image src='../../../src/assets/img/combed24s.png' width={70} height={70}/>
-                            <Box ml={4}>
-                                <Text>T-shirt</Text>
-                                <Text>Size: XL</Text>
-                                <Text>Color: White</Text>
-                            </Box>
-                        </Flex>
-                        <Text>$72.5</Text>
-                        <Text>2</Text>
-                        <Text>$72.5</Text>
-                    </Flex>
-                    <Divider orientation='horizontal' mt={4} mb={4}/>
-                    <Text textAlign={"end"} mr={"210px"}>Total : $345</Text>
-                </Box>
+                {/* Total Price */}
+                <Divider orientation='horizontal' mt={4} mb={4} />
+                <Flex justifyContent="flex-end">
+                    <Text fontSize="lg">Total: ${total}</Text>
+                </Flex>
             </Box>
-        </>
+        </Box>
     );
 }
 

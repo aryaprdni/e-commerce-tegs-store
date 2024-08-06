@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { API } from "../../../libs/axios";
+import { API, APIWithToken } from "../../../libs/axios";
 import { IProductDetail } from "../../../types/product-detail";
+import { toast } from "react-toastify";
 
-export function useProductDetail() {
+export function useProductDetail(productId: number) {
     const [productData, setProductData] = useState<IProductDetail>();
     const [productSimilarData, setProductSimilarData] = useState<IProductDetail[]>();
 
     async function getProductDetail() {
         try {
-            const response = await API.get("/products/12");
-            console.log("response.data: ", response.data);
+            const response = await API.get(`/product-detail/${productId}`);
             setProductData(response.data.data);
         } catch (error) {
             console.log("Error getting product detail: ", error);
@@ -18,20 +18,44 @@ export function useProductDetail() {
 
     async function getSimilarProduct() {
         try {
-            const response = await API.get("/products/10/similar");
+            const response = await API.get(`/products/${productId}/similar`);
             setProductSimilarData(response.data.data);
         } catch (error) {
             console.log("Error getting product detail: ", error);
         }
     }
 
+    async function addToCart(productId: number, quantity: number, selectedSize: string, selectedColor: string) {
+        if (productId === undefined) {
+            console.error("Product ID is undefined.");
+            return;
+        }
+    
+        try {
+            const response = await APIWithToken.post('/shopping-cart', {
+                product_id: productId,
+                quantity: quantity,
+                selectedSize: selectedSize,
+                selectedColor: selectedColor
+            });
+            console.log(response.data);
+            toast.success("Product added to cart");
+        } catch (error) {
+            console.error("Error adding to cart: ", error);
+        }
+    }
+    
+
     useEffect(() => {
-        getProductDetail();
-        getSimilarProduct();
-    }, []);
+        if (productId) {
+            getProductDetail();
+            getSimilarProduct();
+        }
+    }, [productId]);
 
     return {
         productData,
-        productSimilarData
+        productSimilarData,
+        addToCart
     }
 }

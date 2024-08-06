@@ -9,6 +9,7 @@ CREATE TABLE "products" (
     "size" TEXT[],
     "image" TEXT[],
     "rating" INTEGER NOT NULL,
+    "sales" INTEGER NOT NULL,
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 );

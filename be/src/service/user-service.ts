@@ -104,10 +104,6 @@ export class UserService {
             user.full_name = updateRequest.full_name;
         }
 
-        if(updateRequest.username) {
-            user.username = updateRequest.username;
-        }
-
         if (updateRequest.password) {
             user.password = await bcrypt.hash(updateRequest.password, 10);
         }

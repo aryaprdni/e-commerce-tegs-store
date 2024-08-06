@@ -4,9 +4,12 @@ import InformationDescription from "./components/information-description";
 import { useProductDetail } from "./hooks/product-detail";
 import { Layout } from "../../Layout";
 import { CoreuselDetail } from "./components/CoreuselDetail";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
-    const { productData, productSimilarData } = useProductDetail();
+    const { productId } = useParams<{ productId: string }>();
+    const id = productId ? parseInt(productId, 10) : undefined;
+    const { productData, productSimilarData } = useProductDetail(id!);
     console.log("similarProductData" + productSimilarData);
     return (
         <Layout >
@@ -15,7 +18,7 @@ const ProductDetail = () => {
                     {/* Product Detail */}
                     <Box>
                         <ProductDetailComps 
-                            id={productData?.id}
+                            id={productData?.id ?? 0}
                             product_name={productData?.product_name}
                             description={productData?.description}
                             stock={productData?.stock}
@@ -41,10 +44,9 @@ const ProductDetail = () => {
                             <Text color={"grey"}>SIMILAR PRODUCTS</Text>
                         </Flex>
                     </Box>
-                        <Box w={"100%"} h={"100%"} mt={10}>
-                            <CoreuselDetail />
-                        </Box>
-                    
+                    <Box w={"100%"} h={"100%"} mt={10}>
+                        <CoreuselDetail />
+                    </Box>
                 </Box>
             </Container>
         </Layout>
