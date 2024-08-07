@@ -9,7 +9,7 @@ const Delivery = () => {
                 <Checkbox colorScheme='green' defaultChecked>
                     SICEPAT
                 </Checkbox>
-                <Text>$100</Text>
+                <Text>100</Text>
             </Flex>
             <Divider orientation='horizontal' mt={2} mb={4} css={{ borderColor: "black", borderWidth: "1px", fontWeight: "bold" }}/>
         </Box>

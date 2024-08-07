@@ -3,7 +3,7 @@ import { User } from "@prisma/client";
 export type UserResponse = {
     full_name: string | null;
     email: string;
-    phone_number: number | null;
+    phone_number: string | null;
     photo_profile: string | null;
     street: string | null;
     city: string | null;
@@ -32,7 +32,7 @@ export type UpdateUserRequest = {
     username?: string;
     full_name?: string;
     password?: string;
-    phone_number?: number;
+    phone_number?: string;
     photo_profile?: string;
     street?: string;
     city?: string;

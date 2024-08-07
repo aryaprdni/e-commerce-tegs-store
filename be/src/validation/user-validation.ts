@@ -17,15 +17,15 @@ export class UserValidation {
     });
 
     static readonly UPDATE : ZodType = z.object({
-        username: z.string().min(1).max(100).optional(),
-        fullname: z.string().min(1).max(100).optional(),
-        password: z.string().min(1).max(100).optional(),
-        phone_number: z.string().min(1).max(100).optional(),
-        photo_profile: z.string().min(1).max(100).optional(),
-        street: z.string().min(1).max(100).optional(),
-        city: z.string().min(1).max(100).optional(),
-        province: z.string().min(1).max(100).optional(),
-        country: z.string().min(1).max(100).optional(),
-        postal_code: z.string().min(1).max(100).optional(),
+        username: z.string().min(1).max(100).optional().nullable(),
+        fullname: z.string().min(1).max(100).optional().nullable(),
+        password: z.string().min(1).max(100).optional().nullable(),
+        phone_number: z.string().min(1).max(100).optional().nullable(),
+        photo_profile: z.string().min(1).max(100).optional().nullable(),
+        street: z.string().min(1).max(100).optional().nullable(),
+        city: z.string().min(1).max(100).optional().nullable(),
+        province: z.string().min(1).max(100).optional().nullable(),
+        country: z.string().min(1).max(100).optional().nullable(),
+        postal_code: z.string().min(1).max(100).optional().nullable(),
     });
 }

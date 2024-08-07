@@ -11,7 +11,7 @@ model User {
   email          String     @id @db.VarChar(100)
   full_name      String?    @db.VarChar(100)
   password       String    @db.VarChar(100)
-  phone_number   Int?       
+  phone_number   String?      
   photo_profile  String?    @db.VarChar(100)
   street         String?    @db.VarChar(100)
   city           String?    @db.VarChar(100)

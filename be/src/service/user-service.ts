@@ -128,6 +128,10 @@ export class UserService {
             user.country = updateRequest.country;
         }
 
+        if (updateRequest.province) {
+            user.province = updateRequest.province;
+        }
+        
         if (updateRequest.postal_code) {
             user.postal_code = updateRequest.postal_code;
         }

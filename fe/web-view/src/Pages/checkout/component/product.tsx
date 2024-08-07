@@ -4,6 +4,7 @@ import useShoppingCart from "../../shoppingCart/hooks/useShoppingCart";
 const Product = () => {
     const { productsInShoppingCart } = useShoppingCart();
     const { products, total } = productsInShoppingCart;
+    console.log(products)
 
     return (
         <Box>
@@ -43,26 +44,26 @@ const Product = () => {
                             />
                             <Box>
                                 <Text fontSize="md">{item.products.product_name}</Text>
-                                <Text fontSize="sm">Size: {item.products.size}</Text>
-                                <Text fontSize="sm">Color: {item.products.color}</Text>
+                                <Text fontSize="sm">Size: {item.selectedSize}</Text>
+                                <Text fontSize="sm">Color: {item.selectedColor}</Text>
                             </Box>
                         </Flex>
                         
                         {/* Unit Price */}
-                        <Text textAlign="center">${item.products.price}</Text>
+                        <Text textAlign="center">Rp {item.products.price}</Text>
                         
                         {/* Quantity */}
                         <Text textAlign="center">{item.quantity}</Text>
                         
                         {/* Total */}
-                        <Text textAlign="center">${item.sub_total}</Text>
+                        <Text textAlign="center">Rp {item.sub_total}</Text>
                     </Grid>
                 ))}
                 
                 {/* Total Price */}
                 <Divider orientation='horizontal' mt={4} mb={4} />
                 <Flex justifyContent="flex-end">
-                    <Text fontSize="lg">Total: ${total}</Text>
+                    <Text fontSize="lg">Total: Rp {total}</Text>
                 </Flex>
             </Box>
         </Box>
