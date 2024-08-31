@@ -1,17 +1,24 @@
-import { Avatar, Box, Center, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Center, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Stack, Text } from "@chakra-ui/react";
 import { CiUser } from "react-icons/ci";
 import { LuMapPin } from "react-icons/lu";
 import { MdEdit, MdEmail, MdOutlinePhone } from "react-icons/md";
+import useEditProfile from "../hooks/useUser";
 
-const MyAccount = () => (
-  <>
+const MyAccount = () => {
+  const { data, handleChange, handleEditProfile, photo_profile_ref } = useEditProfile();
+
+  const photoProfileUrl = data.photo_profile instanceof File
+    ? URL.createObjectURL(data.photo_profile)
+    : data.photo_profile || "https://bit.ly/dan-abramov";
+
+  return (
     <Box w={"1000px"} h={"100%"}>
       <Heading size="lg" whiteSpace={"nowrap"}>My Account</Heading>
       <FormControl>
         <Box mt={3} position={"relative"} marginTop={"20px"}>
           <Avatar
-            name="Segun Adebayo"
-            src="https://bit.ly/dan-abramov"
+            name={data.full_name || "User"}
+            src={photoProfileUrl}
             size={"xl"}
           />
           <Center
@@ -28,7 +35,10 @@ const MyAccount = () => (
             <Input
               type="file"
               hidden
+              ref={photo_profile_ref}
               accept="image/jpg,image/png,image/jpeg"
+              name="photo_profile"
+              onChange={handleChange}
             />
           </Center>
         </Box>
@@ -40,7 +50,14 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <CiUser color='gray.300' />
                 </InputLeftElement>
-                <Input type='text' variant="flushed" placeholder='Enter your full name' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Enter your full name'
+                  name='full_name'
+                  value={data.full_name || ""}
+                  onChange={handleChange}
+                />
               </InputGroup>
 
               <Text mb={-3} mt={3} color={"gray.500"}>Number Phone</Text>
@@ -48,7 +65,14 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <MdOutlinePhone color='gray.300' />
                 </InputLeftElement>
-                <Input type='email' variant="flushed" placeholder='Enter your number phone' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Enter your phone number'
+                  name='phone_number'
+                  value={data.phone_number || ""}
+                  onChange={handleChange}
+                />
               </InputGroup>
 
               <Text mb={-3} mt={3} color={"gray.500"}>Province</Text>
@@ -56,7 +80,14 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <LuMapPin color='gray.300' />
                 </InputLeftElement>
-                <Input type='text' variant="flushed" placeholder='Enter your province' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Enter your province'
+                  name='province'
+                  value={data.province || ""}
+                  onChange={handleChange}
+                />
               </InputGroup>
 
               <Text mb={-3} mt={3} color={"gray.500"}>Street</Text>
@@ -64,7 +95,14 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <LuMapPin color='gray.300' />
                 </InputLeftElement>
-                <Input type='text' variant="flushed" placeholder='Street' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Street'
+                  name='street'
+                  value={data.street || ""}
+                  onChange={handleChange}
+                />
               </InputGroup>
             </Stack>
           </Box>
@@ -76,7 +114,14 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <MdEmail color='gray.300' />
                 </InputLeftElement>
-                <Input type='text' variant="flushed" placeholder='Email' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Email'
+                  name='email'
+                  value={data.email || ""}
+                  isReadOnly
+                />
               </InputGroup>
 
               <Text mb={-3} mt={3} color={"gray.500"}>Country</Text>
@@ -84,7 +129,14 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <LuMapPin color='gray.300' />
                 </InputLeftElement>
-                <Input type='email' variant="flushed" placeholder='Country' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Country'
+                  name='country'
+                  value={data.country || ""}
+                  onChange={handleChange}
+                />
               </InputGroup>
 
               <Text mb={-3} mt={3} color={"gray.500"}>City</Text>
@@ -92,7 +144,14 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <LuMapPin color='gray.300' />
                 </InputLeftElement>
-                <Input type='text' variant="flushed" placeholder='Enter your city' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Enter your city'
+                  name='city'
+                  value={data.city || ""}
+                  onChange={handleChange}
+                />
               </InputGroup>
 
               <Text mb={-3} mt={3} color={"gray.500"}>Postal Code</Text>
@@ -100,14 +159,22 @@ const MyAccount = () => (
                 <InputLeftElement pointerEvents='none'>
                   <LuMapPin color='gray.300' />
                 </InputLeftElement>
-                <Input type='text' variant="flushed" placeholder='Enter your postal code' />
+                <Input
+                  type='text'
+                  variant="flushed"
+                  placeholder='Enter your postal code'
+                  name='postal_code'
+                  value={data.postal_code || ""}
+                  onChange={handleChange}
+                />
               </InputGroup>
             </Stack>
           </Box>
         </Flex>
+        <Button mt={5} colorScheme="blue" onClick={handleEditProfile}>Update Profile</Button>
       </FormControl>
     </Box>
-  </>
-);
+  );
+};
 
 export default MyAccount;

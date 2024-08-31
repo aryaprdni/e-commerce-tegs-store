@@ -13,7 +13,6 @@ export const APIWithToken = axios.create({
     },
 });
 
-// Menambahkan interceptor untuk menambahkan token ke setiap permintaan
 APIWithToken.interceptors.request.use(config => {
     const token = localStorage.getItem('token');
     if (token) {

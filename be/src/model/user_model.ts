@@ -9,6 +9,7 @@ export type UserResponse = {
     city: string | null;
     province: string | null;
     country: string | null;
+    city_id: number | null;
     postal_code: string | null;
     token? : string;
 }
@@ -29,7 +30,6 @@ export type LoginUserRequest = {
 }
 
 export type UpdateUserRequest = {
-    username?: string;
     full_name?: string;
     password?: string;
     phone_number?: string;
@@ -51,6 +51,7 @@ export function toUserResponse(user: User): UserResponse {
         city: user.city,
         province: user.province,
         country: user.country,
+        city_id: user.city_id,
         postal_code: user.postal_code,
     }
 }

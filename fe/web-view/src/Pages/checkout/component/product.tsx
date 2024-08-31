@@ -4,7 +4,7 @@ import useShoppingCart from "../../shoppingCart/hooks/useShoppingCart";
 const Product = () => {
     const { productsInShoppingCart } = useShoppingCart();
     const { products, total } = productsInShoppingCart;
-    console.log(products)
+    // console.log(products)
 
     return (
         <Box>
@@ -46,6 +46,7 @@ const Product = () => {
                                 <Text fontSize="md">{item.products.product_name}</Text>
                                 <Text fontSize="sm">Size: {item.selectedSize}</Text>
                                 <Text fontSize="sm">Color: {item.selectedColor}</Text>
+                                <Text fontSize="sm">Weight: {item.products.weight! * item.quantity}</Text>
                             </Box>
                         </Flex>
                         

@@ -17,6 +17,7 @@ model User {
   city           String?    @db.VarChar(100)
   province       String?    @db.VarChar(100)
   country        String?    @db.VarChar(100)
+  city_id        Int?
   postal_code    String?    @db.VarChar(100)
   token          String?    
   shoppingCart ShoppingCart?
@@ -57,6 +58,7 @@ model Product {
   color         String[]
   size          String[]
   image         String[]
+  weight        Int
   rating        Float @default(0)
   sales         Int @default(0)
 
@@ -101,9 +103,11 @@ model ShoppingCartItem {
 }
 
 model Transaction {
-  id         Int                 @id @default(autoincrement())
+  id String                 @id @db.VarChar(110)
   total Int
   status transactions_status
+  service_fee Int
+  delivery_details Json?
   customer_name String @db.VarChar(255)
   customer_email String @db.VarChar(255)
   snap_token String? @db.VarChar(255)
@@ -121,6 +125,7 @@ model Transaction {
 }
 
 model TransactionsItem {
+  id String @id @db.VarChar(110)
   product_name String @db.VarChar(255)
   price Int
   quantity Int
@@ -130,11 +135,9 @@ model TransactionsItem {
   product Product @relation(fields: [productId], references: [id])
   productId Int
   
-  transaction Transaction @relation(fields: [transactionId], references: [id])
-  transactionId Int
-
-  @@id([productId, transactionId])
-  @@map("transactionsitem")
+  transaction Transaction @relation(fields: [transaction_id], references: [id])
+  transaction_id String @db.VarChar(110)
+  @@map("transactions_item")
 }
 
 enum transactions_status {

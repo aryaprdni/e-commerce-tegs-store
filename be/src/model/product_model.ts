@@ -11,6 +11,7 @@ export type ProductResponse = {
     description: string | null;
     rating: number | null;
     sales: number;
+    weight: number;
     category: {
         id: number;
         category_name: string;
@@ -28,6 +29,7 @@ export type CreateProductRequest = {
     rating: number;
     color: string[];
     sales: number;
+    weight: number;
     category_id: number;
 }
 
@@ -42,6 +44,7 @@ export type UpdateProductRequest = {
     description?: string;
     rating?: number;
     sales?: number;
+    weight?: number;
     category_id?: number;
 }
 
@@ -71,6 +74,7 @@ export function toProductResponse(product: Product & { category?: {
         description: product.description,
         rating: product.rating,
         sales: product.sales,
+        weight: product.weight,
         category: product.category
             ? {
                   id: product.category.id,

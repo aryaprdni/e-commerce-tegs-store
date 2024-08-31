@@ -12,6 +12,7 @@ export class ProductValidation {
         description: z.string().optional(),
         rating: z.number().optional(),
         sales: z.number().optional(),
+        weight: z.number().optional(),
         category_id: z.number().min(1)
     })
 
@@ -25,6 +26,7 @@ export class ProductValidation {
         description: z.string().optional(),
         rating: z.number().optional(),
         sales: z.number().optional(),
+        weight: z.number().optional(),
         category_id: z.number().min(1).optional()
     })
 

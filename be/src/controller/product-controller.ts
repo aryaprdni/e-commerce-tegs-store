@@ -41,10 +41,10 @@ export class ProductController {
                 category_id: parseInt(req.body.category_id),
                 color: color,
                 size: size,
-                sales: parseInt(req.body.sales)
+                sales: parseInt(req.body.sales),
+                weight: parseInt(req.body.weight)
             };
 
-            console.log(request)
             const response = await ProductService.create(req.user!, request);
             res.status(200).json({
                 data: response

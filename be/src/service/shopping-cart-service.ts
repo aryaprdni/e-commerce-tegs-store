@@ -315,4 +315,32 @@ export class ShoppingCartService {
         },
     });
   }
+
+  static async deleteAll(user: User): Promise<void> {
+    const shoppingCart = await prismaClient.shoppingCart.findUnique({
+      where: {
+        user_email: user.email,
+      },
+    });
+
+    if (!shoppingCart) {
+      throw new ResponseError(400, "Shopping cart not found");
+    }
+
+    await prismaClient.shoppingCartItem.deleteMany({
+      where: {
+        shoppingCartId: shoppingCart.id,
+      },
+    });
+
+    await prismaClient.shoppingCart.update({
+      where: {
+        id: shoppingCart.id,
+      },
+      data: {
+        quantity: 0,
+        total: 0,
+      },
+    });
+  }
 }

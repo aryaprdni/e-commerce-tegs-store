@@ -9,6 +9,7 @@ export interface ProductDetail {
     image?: string;
     rating?: number;
     sales?: number;
+    weight?: number;
     category_id?: number;
 }
 

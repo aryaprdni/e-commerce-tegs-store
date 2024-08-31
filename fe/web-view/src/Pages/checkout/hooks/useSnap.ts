@@ -16,6 +16,7 @@ const useSnap = () => {
         script.src = `${MIDTRANS_API_URL}/snap/snap.js`;
         script.setAttribute('data-client-key', myMidtransClientKey);
         script.onload = () => {
+            console.log('Snap.js loaded');
             setSnap(window.snap);
         };
         document.body.appendChild(script);
@@ -26,6 +27,7 @@ const useSnap = () => {
     }, []);
 
     const snapEmbed = (snap_token: string, embedId : string, action : any) => {
+        console.log('snapEmbed called with token:', snap_token);
         const snap: any = window.snap;
         if(snap){
             snap.embed(snap_token, {
@@ -42,6 +44,8 @@ const useSnap = () => {
                     action.onClose();
                 }
             })
+        } else {
+            console.log('Snap.js not loaded');
         }
     }
 

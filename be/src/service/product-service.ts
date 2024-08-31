@@ -19,6 +19,7 @@ export class ProductService {
             description: createProductRequest.description,
             rating: createProductRequest.rating,
             sales: createProductRequest.sales,
+            weight: createProductRequest.weight,
             category: {
                 connect: {
                     id: createProductRequest.category_id

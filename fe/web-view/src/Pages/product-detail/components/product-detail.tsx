@@ -11,10 +11,10 @@ const ProductDetailComps = (props: IProductDetail) => {
     const [selectedImage, setSelectedImage] = useState(props.image && props.image.length > 0 ? props.image[0] : '');
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [quantity, setQuantity] = useState(1);
-    const [selectedSizeIndex, setSelectedSizeIndex] = useState(-1);
-    const [selectedColorIndex, setSelectedColorIndex] = useState(-1);
 
-    // Menyimpan ukuran dan warna yang dipilih
+    const [selectedSizeIndex, setSelectedSizeIndex] = useState(props.size && props.size.length > 0 ? 0 : -1);
+    const [selectedColorIndex, setSelectedColorIndex] = useState(props.color && props.color.length > 0 ? 0 : -1);
+
     const selectedSize = props.size ? props.size[selectedSizeIndex] || '' : '';
     const selectedColor = props.color ? props.color[selectedColorIndex] || '' : '';
 
@@ -75,7 +75,7 @@ const ProductDetailComps = (props: IProductDetail) => {
                 <Text fontWeight={700} fontSize={20} mt={5}>Choose color</Text>
                 <Flex gap={3} mt={5}>
                     {props.color && props.color.map((color, index) => (
-                        <Flex key={index} border={selectedColorIndex === index ? '4px solid green' : '0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} borderRadius={15} h={10} onClick={() => selectColor(index)}>
+                        <Flex key={index} border={selectedColorIndex === index ? '4px solid green' : '0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} borderRadius={15} h={10} onClick={() => selectColor(index)} cursor={"pointer"}>
                             <Text ml={2}>{color}</Text>
                         </Flex>
                     ))}
@@ -84,7 +84,7 @@ const ProductDetailComps = (props: IProductDetail) => {
                 <Text fontWeight={700} fontSize={20} mt={5}>Choose size</Text>
                 <Flex gap={3} mt={5}>
                     {props.size && props.size.map((size, index) => (
-                        <Flex key={index} border={selectedSizeIndex === index ? '4px solid green' : '0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} borderRadius={15} h={10} onClick={() => selectSize(index)}>
+                        <Flex key={index} border={selectedSizeIndex === index ? '4px solid green' : '0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} borderRadius={15} h={10} onClick={() => selectSize(index)} cursor={"pointer"}>
                             <Text ml={2}>{size}</Text>
                         </Flex>
                     ))}
@@ -92,16 +92,16 @@ const ProductDetailComps = (props: IProductDetail) => {
 
                 <Flex mt={12} flexDirection={{ base: 'column', md: 'row' }} gap={3} alignItems={"center"} justifyContent={"center"} ml={{ base: -14, md: -280 }}>
                     <Flex border={'0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} h={10} width={"150px"} gap={10}>
-                        <Text cursor={"pointer"} onClick={decreaseQuantity}>-</Text>
+                        <Text cursor={"pointer"} onClick={decreaseQuantity} style={{ cursor: 'pointer' }}>-</Text>
                         <Text>{quantity}</Text>
-                        <Text cursor={"pointer"} onClick={increaseQuantity}>+</Text>
+                        <Text cursor={"pointer"} onClick={increaseQuantity} style={{ cursor: 'pointer' }}>+</Text>
                     </Flex> 
 
-                    <Flex ml={{ base: 0, md: 5 }} border={'0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} h={10} width={"200px"} gap={2} bgColor={"#1cb86f"} color={"#fff"} onClick={handleAddToCart}>
+                    <Flex ml={{ base: 0, md: 5 }} border={'0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} h={10} width={"200px"} gap={2} bgColor={"#1cb86f"} color={"#fff"} onClick={handleAddToCart} cursor={"pointer"}>
                         ADD TO CART <FiShoppingCart />
                     </Flex>
 
-                    <Box ml={{ base: 0, md: 5 }} border={'0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} h={10} width={"150px"} gap={2} bgColor={"#1cb86f"} color={"#fff"}>
+                    <Box ml={{ base: 0, md: 5 }} border={'0.4px solid #ddd'} p={2} justifyContent={"center"} textAlign={"center"} h={10} width={"150px"} gap={2} bgColor={"#1cb86f"} color={"#fff"} cursor={"pointer"}>
                         BUY NOW
                     </Box>
                 </Flex>

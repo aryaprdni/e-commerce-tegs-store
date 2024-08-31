@@ -6,6 +6,7 @@ import { UserValidation } from "../validation/user-validation";
 import { Validation } from "../validation/validation";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { RajaOngkirService } from "./delivery-service";
 
 export class UserService {
     static async verifyEmail(request: VerifyEmailRequest) : Promise<UserResponse> {
@@ -121,6 +122,12 @@ export class UserService {
         }
 
         if (updateRequest.city) {
+            const city_id = await RajaOngkirService.getCityId(updateRequest.city);
+            // console.log(city_id);
+            if (!city_id) {
+                throw new ResponseError(400, "Invalid city name");
+            }
+            user.city_id = city_id;
             user.city = updateRequest.city;
         }
 

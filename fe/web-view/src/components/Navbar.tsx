@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Button,
@@ -16,22 +15,34 @@ import {
   FaSearch,
   FaTwitter,
 } from "react-icons/fa";
-import { LuShoppingCart } from "react-icons/lu";
+import { LuShoppingCart, LuUser2 } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
-import { LuUser2 } from "react-icons/lu";
 import useSearch from "../Pages/Search/hooks/useSearch";
+import { APIWithToken } from "../libs/axios";
 
 export const Navbar = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const logout = useAuthStore((state) => state.logout);
   const { handleInputChange, handleSearch, searchParams, handleKeyDown } = useSearch();
   const navigate = useNavigate();
 
   const handleCart = () => {
     if (isAuthenticated()) {
-      navigate("/shopping-cart")
+      navigate("/shopping-cart");
     } else {
-      navigate("/login")
+      navigate("/login");
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await APIWithToken('users/current');
+      console.log(response.data);
+      logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed: ", error);
     }
   };
 
@@ -111,7 +122,21 @@ export const Navbar = () => {
               <HStack>
                 {isAuthenticated() ? (
                   <>
-                    <LuUser2 color="white" fontSize={22} />
+                    <LuUser2 color="white" fontSize={22} onClick={() => navigate("/user")} />
+                    <Button
+                      ml={3}
+                      bg={"#FF0000"}
+                      _hover={{ bg: "#CC0000" }}
+                      color={"#fff"}
+                      border={"none"}
+                      borderRadius={"0.3rem"}
+                      w={"5rem"}
+                      h={"1.6rem"}
+                      fontSize={"0.7rem"}
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
                   </>
                 ) : (
                   <>

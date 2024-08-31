@@ -10,6 +10,7 @@ interface User {
   province: string;
   country: string;
   postal_code: string;
+  city_id: number;
 }
 
 interface AuthState {
@@ -25,13 +26,11 @@ interface AuthState {
 const TOKEN_EXPIRATION_TIME = 3600 * 1000; // 1 jam dalam milidetik
 
 const useAuthStore = create<AuthState>((set, get) => {
-  // Cek apakah token telah kedaluwarsa
   const isTokenExpired = () => {
     const expirationTime = localStorage.getItem('token_expiration_time');
     return expirationTime ? Date.now() > parseInt(expirationTime, 10) : true;
   };
 
-  // Hapus token jika sudah kedaluwarsa
   if (isTokenExpired()) {
     localStorage.removeItem('token');
     localStorage.removeItem('token_expiration_time');

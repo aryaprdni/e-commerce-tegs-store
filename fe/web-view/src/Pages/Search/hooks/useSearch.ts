@@ -19,7 +19,7 @@ const useSearch = () => {
 
     const fetchsProducts = async () => {
         try {
-            console.log("Fetching products with params:", searchParams);
+            // console.log("Fetching products with params:", searchParams);
             const response = await API.get("/search-products", {
                 params: {
                     product_name: searchParams.query,
@@ -51,7 +51,7 @@ const useSearch = () => {
     };
 
     useEffect(() => {
-        console.log("Fetching products due to change in searchParams:", searchParams);
+        // console.log("Fetching products due to change in searchParams:", searchParams);
         if (searchParams.query) {
             fetchsProducts();
         }
